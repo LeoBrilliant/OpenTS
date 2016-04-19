@@ -8,6 +8,7 @@
 #ifndef STL_PriorityQueue_H_
 #define STL_PriorityQueue_H_
 
+#include <iostream>
 #include <vector>
 #include <queue>
 
