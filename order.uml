@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_ad_ZEAHyEeaKFs_YIj0wFg" name="NewModel">
+  <packagedElement xmi:type="uml:Activity" xmi:id="_WNsOQAICEeaKFs_YIj0wFg" name="NewModel activity" node="_kzc9wAICEeaKFs_YIj0wFg _tGmfsAICEeaKFs_YIj0wFg _xM_GQAICEeaKFs_YIj0wFg _yZadIAICEeaKFs_YIj0wFg _2y93UAICEeaKFs_YIj0wFg" group="_l8ykYAICEeaKFs_YIj0wFg _oilh8AICEeaKFs_YIj0wFg _p4jPUAICEeaKFs_YIj0wFg __-UzoAICEeaKFs_YIj0wFg" partition="_oilh8AICEeaKFs_YIj0wFg _p4jPUAICEeaKFs_YIj0wFg">
+    <group xmi:type="uml:InterruptibleActivityRegion" xmi:id="_l8ykYAICEeaKFs_YIj0wFg" name="InterruptibleActivityRegion1" node="_xM_GQAICEeaKFs_YIj0wFg _yZadIAICEeaKFs_YIj0wFg"/>
+    <group xmi:type="uml:ActivityPartition" xmi:id="_oilh8AICEeaKFs_YIj0wFg" name="ActivityPartition1" node="_kzc9wAICEeaKFs_YIj0wFg"/>
+    <group xmi:type="uml:ActivityPartition" xmi:id="_p4jPUAICEeaKFs_YIj0wFg" name="ActivityPartition2"/>
+    <group xmi:type="uml:InterruptibleActivityRegion" xmi:id="__-UzoAICEeaKFs_YIj0wFg" name="InterruptibleActivityRegion2"/>
+    <node xmi:type="uml:DataStoreNode" xmi:id="_kzc9wAICEeaKFs_YIj0wFg" name="DataStore1" inPartition="_oilh8AICEeaKFs_YIj0wFg"/>
+    <node xmi:type="uml:InitialNode" xmi:id="_tGmfsAICEeaKFs_YIj0wFg" name="Initial1"/>
+    <node xmi:type="uml:ActivityFinalNode" xmi:id="_xM_GQAICEeaKFs_YIj0wFg" name="ActivityFinal1" inInterruptibleRegion="_l8ykYAICEeaKFs_YIj0wFg"/>
+    <node xmi:type="uml:JoinNode" xmi:id="_yZadIAICEeaKFs_YIj0wFg" name="Join1" inInterruptibleRegion="_l8ykYAICEeaKFs_YIj0wFg">
+      <joinSpec xmi:type="uml:LiteralBoolean" xmi:id="_yZbEMAICEeaKFs_YIj0wFg" name="Join1" value="true"/>
+    </node>
+    <node xmi:type="uml:CallBehaviorAction" xmi:id="_2y93UAICEeaKFs_YIj0wFg" behavior="_WNsOQAICEeaKFs_YIj0wFg"/>
+  </packagedElement>
+</uml:Model>

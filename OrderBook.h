@@ -8,15 +8,25 @@
 #ifndef ORDERBOOK_H_
 #define ORDERBOOK_H_
 
+#include <vector>
+#include "Instrument.h"
+#include "Queue.h"
+
 class OrderBook
 {
 public:
 	OrderBook();
 
 private:
-	//价格哈希表
-	//价格优先队列
-	//委托时间队列
+	//合约信息
+	Instrument * IntrumentInfo;
+	//订单档位哈希队列
+
+	//订单档位优先队列
+	//TODO先不考虑行情
+	//订单队列
+
+	Queue OrderQueue;
 };
 
 
