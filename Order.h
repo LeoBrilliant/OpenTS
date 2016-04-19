@@ -41,6 +41,10 @@ private:
 	//交易日
 	//报单时间
 	chrono OrderTimePoint;
+	//剩余手数
+	int VolumeLeft;
+	//撤单时间
+	chrono CancelTimePoint;
 };
 
 
