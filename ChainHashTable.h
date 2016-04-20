@@ -12,6 +12,9 @@
 
 #include "List.h"
 
+const int ELEMENT_FOUND = 0;
+const int ELEMENT_NOT_FOUND = 1;
+
 template<typename Key, typename Value>
 class ChainHashTable
 {
@@ -42,6 +45,14 @@ private:
 	int chtbl_lookup(Key **data);
 
 	inline int chtbl_size() {return this->size;}
+
+	static const enum ConstValue
+	{
+		ELEMENT_FOUND = 0,
+		ELEMENT_NOT_FOUND = 1,
+		SUCCESS = 0,
+		FAILED = -1
+	} x ;
 };
 
 #endif /* C_CHTBL_H_ */

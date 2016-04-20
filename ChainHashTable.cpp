@@ -19,7 +19,7 @@ int ChainHashTable<Key,Value>::chtbl_init(int buckets, int (*h)(const void *key)
 {
 	int i;
 	Key k;
-	if((this->table = new List<Key>[buckets](buckets, k) ))
+	if((this->table = new List<Key>[buckets]))
 	{
 		return -1;
 	}
@@ -71,8 +71,11 @@ int ChainHashTable<Key,Value>::chtbl_insert(const Key *data)
 
 	bucket = this->h(data) % this->buckets;
 
-	if((retval = list_ins_next(&this->table[bucket], NULL, data)) == 0)
-		this->size++;
+	//if((retval = list_ins_next(&this->table[bucket], NULL, data)) == 0)
+	//	this->size++;
+
+	this->table[bucket].PushBack(data);
+	this->size++;
 
 	return retval;
 }
@@ -84,27 +87,22 @@ int ChainHashTable<Key,Value>::chtbl_remove(Key **data)
 
 	bucket = this->h(*data) % this->buckets;
 
-	prev = NULL;
+	//prev = NULL;
 
-	for(element = list_head(&this->table[bucket]); element != NULL;
-			element = list_next(element))
+	//for(element = list_head(&this->table[bucket]); element != NULL;
+	//		element = list_next(element))
+	for(typename List<Key>::LstIter element = this->table[bucket].Begin(); element != this->table[bucket].Begin(); element++)
 	{
-		if(this->match(*data, list_data(element)))
+		if(this->match(*data, *element))
 		{
-			if(list_rem_next(&this->table[bucket], prev, data) == 0)
-			{
-				this->size--;
-				return 0;
-			}
-			else
-			{
-				return -1;
-			}
+			this->table[bucket].Erase(element);
+			this->size--;
+			return ConstValue::SUCCESS;
+
 		}
-		prev = element;
 	}
 
-	return -1;
+	return ConstValue::FAILED;
 }
 template<typename Key, typename Value>
 int ChainHashTable<Key,Value>::chtbl_lookup(Key **data)
@@ -114,14 +112,14 @@ int ChainHashTable<Key,Value>::chtbl_lookup(Key **data)
 
 	bucket = this->h(*data) % this->buckets;
 
-	for(element = list_head(&this->table[bucket]); element != NULL; element = list_next(element))
+	for(typename List<Key>::LstIter element = this->table[bucket].Begin(); element != this->table[bucket].Begin(); element++)
 	{
-		if(this->match(*data, list_data(element)))
+		if(this->match(*data, *element))
 		{
-			*data = list_data(element);
-			return 0;
+			*data = *element;
+			return ConstValue::ELEMENT_FOUND;
 		}
 	}
 
-	return -1;
+	return ConstValue::ELEMENT_NOT_FOUND;
 }

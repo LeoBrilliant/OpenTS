@@ -9,9 +9,14 @@
 
 using namespace std;
 
+#include "UnitTest/ListTest.h"
+
 int main()
 {
 	cout << "Hello OpenTS!" << endl;
+
+	ListTest<int> lt;
+	lt.TestSuite();
 	return 0;
 }
 

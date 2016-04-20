@@ -15,9 +15,13 @@ using namespace std;
 template<typename T>
 class List
 {
+public:
 	typedef typename list<T>::iterator LstIter;
 	typedef typename list<T>::const_iterator LstCstIter;
 	typedef typename list<T>::const_reverse_iterator RLstCstIter;
+	typedef bool(*Compare)(const T& , const T&);
+	typedef bool(*BinaryPredicate)(const T& , const T&);
+	typedef bool(*Predicate)(const T&);
 private:
 	list<T> lt;
 
@@ -29,7 +33,7 @@ public:
 	List(List<T> & l):lt(l.GetLt()) { cout << "List Constructor: Copy" << endl; }
 
 	//Destructor
-	~List(){ lt.clear(); cout << "DequeOps Destructor: Default" << endl; }
+	~List(){ lt.clear(); cout << "List Destructor: Default" << endl; }
 
 	//Operator
 	list<T> & operator=(List<T> & t) { lt = t.GetLt(); return *this ; }
@@ -66,9 +70,6 @@ public:
 	void Clear() { lt.clear(); }
 
 	//Operations
-	typedef bool(*Compare)(const T& , const T&);
-	typedef bool(*BinaryPredicate)(const T& , const T&);
-	typedef bool(*Predicate)(const T&);
 	void Splice(LstIter position, List<T>& t) { lt.splice(position, t.GetLt()); }
 	void Splice(LstIter position, List<T>& t, LstIter i) { lt.splice(position, t.GetLt(), i); }
 	void Splice(LstIter position, List<T>& t, LstIter first, LstIter last) { lt.splice(position, t.GetLt(), first, last); }
@@ -91,7 +92,36 @@ public:
 		return first < second;
 	}
 
+	//Summary
+	void GetSummary();
+	//Detail
+	void GetDetail(const string &);
+
 };
 
+template<typename T>
+void List<T>::GetSummary()
+{
+	cout << "Summary[" << endl;
+	cout << "empty: \t" << (this->Empty()? "True":"False") << "\t" << endl;
+	cout << "size: \t" << this->Size() << endl;
+	cout << "max_size: \t" << this->MaxSize() << endl;
+	cout << "]" << endl;
+}
+
+template<typename T>
+void List<T>::GetDetail(const string & s)
+{
+	cout << s << endl;
+	this->GetSummary();
+	cout << "Elements[" << endl;
+	LstCstIter iv = this->Begin();
+	while(iv != this->End())
+	{
+		cout << "<" << (*iv) << ">" ;
+		++iv;
+	}
+	cout << "]" << endl;
+}
 
 #endif /* STL_LISTOPERATIONS_H_ */
