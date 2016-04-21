@@ -7,19 +7,20 @@
 
 #include "ChainHashTable.h"
 
-#include <cstdlib>
-#include <cstring>
-
-#include "List.h"
+/*
 
 template<typename Key, typename Value>
-int ChainHashTable<Key,Value>::chtbl_init(int buckets, int (*h)(const void *key),
-		int (*match)(const void *key1, const void *key2),
-		void (*destroy)(void *data))
+int ChainHashTable<Key,Value>::chtbl_init(int buckets, int (*h)(const Key *key),
+		int (*match)(const Key *key1, const Key *key2),
+		void (*destroy)(Key *data))
 {
 	int i;
 	Key k;
-	if((this->table = new List<Key>[buckets]))
+	try
+	{
+		this->table = new List<Key>[buckets];
+	}
+	catch(...)
 	{
 		return -1;
 	}
@@ -120,6 +121,34 @@ int ChainHashTable<Key,Value>::chtbl_lookup(Key **data)
 			return ConstValue::ELEMENT_FOUND;
 		}
 	}
-
 	return ConstValue::ELEMENT_NOT_FOUND;
 }
+
+template<typename Key, typename Value>
+void ChainHashTable<Key,Value>::GetSummary()
+{
+	cout << "Summary[" << endl;
+	//cout << "empty: \t" << (this->Empty()? "True":"False") << "\t" << endl;
+	cout << "size: \t" << this->Size() << endl;
+	//cout << "max_size: \t" << this->MaxSize() << endl;
+	cout << "]" << endl;
+}
+
+template<typename Key, typename Value>
+void ChainHashTable<Key,Value>::GetDetail(const string & s)
+{
+	cout << s << endl;
+	this->GetSummary();
+	cout << "Elements[" << endl;
+	for(int i=0; i < this->buckets; ++i)
+	{
+		typename List<Key>::LstCstIter iv = this->table[i].Begin();
+		while(iv != this->table[i].End())
+		{
+			cout << "<" << (*iv) << ">" ;
+			++iv;
+		}
+		cout << "]" << endl;
+	}
+}
+*/

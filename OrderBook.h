@@ -20,7 +20,7 @@ public:
 private:
 	//合约信息
 	Instrument * IntrumentInfo;
-	//订单档位哈希队列
+	//订单档位哈希列表
 
 	//订单档位优先队列
 	//TODO先不考虑行情
