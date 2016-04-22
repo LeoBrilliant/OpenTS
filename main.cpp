@@ -19,7 +19,7 @@ int main()
 	ChainHashTableTest<int, char> chtt;
 	chtt.ContructorTest();
 	//chtt.TestSuite();
-	ListTest<int> lt;
+	//ListTest<int> lt;
 	//lt.TestSuite();
 	return 0;
 }
