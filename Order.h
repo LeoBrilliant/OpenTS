@@ -11,10 +11,13 @@
 #include <String>
 #include <chrono>
 
+#include "Instruction.h"
+#include "ProgramMessage.h"
+
 using namespace std;
 using namespace chrono;
 
-class Order
+class Order : public Instruction
 {
 public:
 	Order();
@@ -45,6 +48,8 @@ private:
 	int VolumeLeft;
 	//撤单时间
 	chrono CancelTimePoint;
+	//订单状态
+	int OrderStatus;
 };
 
 

@@ -10,6 +10,8 @@
 
 #include <vector>
 #include "Instrument.h"
+#include "ChainHashTable.h"
+#include "Order.h"
 #include "Queue.h"
 
 class OrderBook
@@ -17,16 +19,20 @@ class OrderBook
 public:
 	OrderBook();
 
+	~OrderBook();
+
 private:
 	//合约信息
 	Instrument * IntrumentInfo;
-	//订单档位哈希列表
+	//订单档位哈希队列
+	ChainHashTable<Order*, string> BidOrderHashQueue;
+	ChainHashTable<Order*, string> AskOrderHashQueue;
 
 	//订单档位优先队列
 	//TODO先不考虑行情
 	//订单队列
 
-	Queue OrderQueue;
+	Queue<Order&> OrderQueue;
 };
 
 

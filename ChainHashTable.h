@@ -68,6 +68,8 @@ public:
 	inline int Size() {return this->size;}
 
 	inline int Insert(Key *data){ return chtbl_insert(data); }
+	inline int Remove(Key **data){ return chtbl_remove(data); }
+	inline int LookUp(Key **data){ return chtbl_lookup(data); }
 
 	typename List<Key>::LstCstIter GetBeginIter(int i);
 	typename List<Key>::LstCstIter GetEndIter(int i);
@@ -206,6 +208,7 @@ int ChainHashTable<Key,Value>::chtbl_insert(Key *data)
 
 	return retval=this->Size();
 }
+
 template<typename Key, typename Value>
 int ChainHashTable<Key,Value>::chtbl_remove(Key **data)
 {
@@ -266,16 +269,18 @@ void ChainHashTable<Key,Value>::GetSummary()
 
 template<typename Key, typename Value>
 inline typename List<Key>::LstCstIter ChainHashTable<Key, Value>::GetBeginIter(int i) {
-	if(i >= 0 && i < this->buckets)
-		return this->table[i].Begin();
+//	if(i >= 0 && i < this->buckets)
+//		return this->table[i].Begin();
 //	else
 //		return NULL;
+	return this->table[i].Begin();
 }
 
 template<typename Key, typename Value>
 inline typename List<Key>::LstCstIter ChainHashTable<Key, Value>::GetEndIter(int i) {
 	if(i >= 0 && i < this->buckets)
 		return this->table[i].End();
+	return this->table[i].End();
 }
 
 template<typename Key, typename Value>

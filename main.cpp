@@ -9,18 +9,14 @@
 
 using namespace std;
 
-#include "UnitTest/ListTest.h"
-#include "UnitTest/ChainHashTableTest.h"
+#include "UnitTest/UnitTestHeader.h"
 
 int main()
 {
 	cout << "Hello OpenTS!" << endl;
 
-	ChainHashTableTest<int, char> chtt;
-	chtt.ContructorTest();
-	//chtt.TestSuite();
-	//ListTest<int> lt;
-	//lt.TestSuite();
+	UnitTestEntrance();
+
 	return 0;
 }
 

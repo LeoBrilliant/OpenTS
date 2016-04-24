@@ -13,8 +13,10 @@
 #include <cassert>
 #include <cerrno>
 #include <stdexcept>
-#include<iomanip>
+#include <iomanip>
 #include <iostream>
+#include <string>
+#include <cstring>
 
 using namespace std;
 
