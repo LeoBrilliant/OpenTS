@@ -8,9 +8,12 @@
 #ifndef INSTRUCTION_H_
 #define INSTRUCTION_H_
 
-#include <chrono>
+#include "RightTimePoint.h"
+#include "Constants.h"
+#include <string>
+
 using namespace std;
-using namespace chrono;
+using namespace constants;
 
 class Instruction
 {
@@ -21,15 +24,34 @@ public:
 private:
 	int InstructionID;
 	string CliendID;
-	chrono InsertTime;
-	chrono ConfirmedTime;
-	chrono UpdateTime;
+	RightTimePoint InsertTime;
+	RightTimePoint ConfirmedTime;
+	RightTimePoint UpdateTime;
 
 	static unsigned int InstructionCounter;
 
 public:
 	static int GetInstructionCounter();
 	static int IncInstructionCounter();
+
+	const string& GetCliendId() const;
+	void SetCliendId(const string& cliendId);
+
+	const RightTimePoint& GetConfirmedTime() const;
+	void SetConfirmedTime(RightTimePoint& confirmedTime);
+	void SetConfirmedTime();
+
+	const RightTimePoint& GetInsertTime() const;
+	void SetInsertTime(RightTimePoint& insertTime);
+	void SetInsertTime();
+
+	int GetInstructionId() const;
+	void SetInstructionId(int instructionId = InstructionCounter);
+	//void SetInstructionId();
+
+	const RightTimePoint& GetUpdateTime() const;
+	void SetUpdateTime(RightTimePoint& updateTime);
+	void SetUpdateTime();
 };
 
 

@@ -5,11 +5,12 @@
  *      Author: LeoBrilliant
  */
 
-#ifndef UNITTEST_TIMEPOINTUNITTEST_H_
-#define UNITTEST_TIMEPOINTUNITTEST_H_
+#ifndef UNITTEST_RIGHTTIMEPOINTUNITTEST_H_
+#define UNITTEST_RIGHTTIMEPOINTUNITTEST_H_
+
+#include "../RightTimePoint.h"
 
 #include "../ProgramMessage.h"
-#include "../TimePoint.h"
 #include <cstdlib>
 #include "UTBase.h"
 
@@ -44,4 +45,4 @@ public:
 
 };
 
-#endif /* UNITTEST_TIMEPOINTUNITTEST_H_ */
+#endif /* UNITTEST_RIGHTTIMEPOINTUNITTEST_H_ */

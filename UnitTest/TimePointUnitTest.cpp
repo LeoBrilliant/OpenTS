@@ -5,7 +5,7 @@
  *      Author: LeoBrilliant
  */
 
-#include "TimePointUnitTest.h"
+#include "RightTimePointUnitTest.h"
 
 unsigned int TimePointUnitTest::caseCount = 0;
 unsigned int TimePointUnitTest::casePassed = 0;
@@ -27,9 +27,9 @@ void TimePointUnitTest::ContructorTest() {
 	ProgramMessage::Debug(__FUNCTION__);
 
 	ProgramMessage::Debug<int>(IncCaseCount());
-	TimePoint tp;
+	RightTimePoint tp;
 	ProgramMessage::Debug(typeid(tp).name());
-	assert( typeid(tp) == typeid(TimePoint));
+	assert( typeid(tp) == typeid(RightTimePoint));
 
 	ProgramMessage::Debug(tp.GetCTime());
 	//cht1.GetSummary();
@@ -43,12 +43,12 @@ void TimePointUnitTest::NowTest() {
 	ProgramMessage::Debug("Include GetCTime and ToTimeT");
 	ProgramMessage::Debug<int>(IncCaseCount());
 	time_t tbase ;
-	time_point<system_clock> tmpp = TimePoint::Now();
+	time_point<system_clock> tmpp = RightTimePoint::Now();
 	time(&tbase);
 	time_t tmp = system_clock::to_time_t(tmpp);
-	TimePoint tp;
+	RightTimePoint tp;
 	ProgramMessage::Debug(typeid(tp).name());
-	assert( typeid(tp) == typeid(TimePoint));
+	assert( typeid(tp) == typeid(RightTimePoint));
 	tp.FromTimeT(&tmp);
 
 	char * cp1, * cp2;

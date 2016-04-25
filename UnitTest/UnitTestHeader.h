@@ -11,7 +11,7 @@
 
 #include "ListTest.h"
 #include "ChainHashTableTest.h"
-#include "TimePointUnitTest.h"
+#include "RightTimePointUnitTest.h"
 
 void TimePointUT();
 void ChainHashTableUT();
