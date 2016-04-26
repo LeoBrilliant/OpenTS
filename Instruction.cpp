@@ -7,9 +7,18 @@
 
 #include "Instruction.h"
 
-unsigned int Instruction::InstructionCounter = Constants::STARTOFINSTRUMENTID;
+unsigned int Instruction::InstructionCounter = Constants::STARTOFINTID;
 
-Instruction::Instruction() : InstructionID(Constants::INVALIDINSTRUMENTID)
+Instruction::Instruction() : InstructionID(Constants::INVALIDINSTRUMENTID),
+		ClientID(Constants::INVALIDINTID),
+		InstType(InstructionType::UNKNOWNINSTRUCTION)
+{
+}
+
+Instruction::Instruction(IntIDType clientID,
+		InstructionType instType, int instID): InstructionID(instID),
+				ClientID(clientID),
+				InstType(instType)
 {
 }
 
@@ -25,12 +34,12 @@ int Instruction::IncInstructionCounter() {
 }
 
 
-const string& Instruction::GetCliendId() const {
-	return CliendID;
+IntIDType Instruction::GetClientId() const {
+	return ClientID;
 }
 
-void Instruction::SetCliendId(const string& cliendId) {
-	CliendID = cliendId;
+void Instruction::SetClientId(IntIDType clientId) {
+	ClientID = clientId;
 }
 
 const RightTimePoint& Instruction::GetConfirmedTime() const {
@@ -76,6 +85,14 @@ void Instruction::SetInsertTime() {
 
 void Instruction::SetUpdateTime(RightTimePoint& updateTime) {
 	UpdateTime = updateTime;
+}
+
+InstructionType Instruction::GetInstType() const {
+	return InstType;
+}
+
+void Instruction::SetInstType(InstructionType instType) {
+	InstType = instType;
 }
 
 void Instruction::SetUpdateTime() {

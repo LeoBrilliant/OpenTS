@@ -9,47 +9,79 @@
 #define ORDER_H_
 
 #include <String>
-#include <chrono>
 
+#include "RightTimePoint.h"
 #include "Instruction.h"
 #include "ProgramMessage.h"
 
 using namespace std;
-using namespace chrono;
 
 class Order : public Instruction
 {
 public:
 	Order();
+	Order(IntIDType clientID,
+			InstructionType instType,
+			string & instID,
+			DirectionType direction,
+			OffsetType offset,
+			PriceType price,
+			VolumeType volume,
+			IntIDType localOrderID);
+	~Order();
 
 private:
 	//客户ID
-	string ClientID;
+	//string ClientID;
 	//合约号
-	string IntrumentID;
+	string InstrumentID;
 	//指令类型
-	string OrderType;
+	//string OrderType;
 	//方向
-	char Direction;
+	DirectionType Direction;
 	//开平标志
-	char OffsetFlag;
+	OffsetType OffsetFlag;
 	//价格
-	double OrderPrice;
+	PriceType OrderPrice;
 	//手数
-	int Volume;
+	VolumeType Volume;
 	//报单编号
-	string OrderID;
+	IntIDType OrderID;
 	//本地报单编号
-	string LocalOrderID;
+	IntIDType LocalOrderID;
 	//交易日
 	//报单时间
-	chrono OrderTimePoint;
+	RightTimePoint OrderTimePoint;
 	//剩余手数
-	int VolumeLeft;
+	VolumeType VolumeLeft;
 	//撤单时间
-	chrono CancelTimePoint;
+	RightTimePoint CancelTimePoint;
 	//订单状态
-	int OrderStatus;
+	OrderStatusType OrderStatus;
+
+public:
+	const RightTimePoint& GetCancelTimePoint() const;
+	void SetCancelTimePoint(RightTimePoint& cancelTimePoint);
+	DirectionType GetDirection() const;
+	void SetDirection(DirectionType direction);
+	const string& GetInstrumentId() const;
+	void SetInstrumentId(string& intrumentId);
+	IntIDType GetLocalOrderId() const;
+	void SetLocalOrderId(IntIDType localOrderId);
+	OffsetType GetOffsetFlag() const;
+	void SetOffsetFlag(OffsetType offsetFlag);
+	IntIDType GetOrderId() const;
+	void SetOrderId(IntIDType orderId);
+	PriceType GetOrderPrice() const;
+	void SetOrderPrice(PriceType orderPrice);
+	OrderStatusType GetOrderStatus() const;
+	void SetOrderStatus(OrderStatusType orderStatus);
+	const RightTimePoint& GetOrderTimePoint() const;
+	void SetOrderTimePoint(RightTimePoint& orderTimePoint);
+	VolumeType GetVolume() const;
+	void SetVolume(VolumeType volume);
+	VolumeType GetVolumeLeft() const;
+	void SetVolumeLeft(VolumeType volumeLeft);
 };
 
 

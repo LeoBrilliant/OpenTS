@@ -14,7 +14,10 @@ typedef enum
 {
 	// InstrumentID
 	INVALIDINSTRUMENTID = -1,
-	STARTOFINSTRUMENTID = 0
+	INVALIDVOLUME = -1,
+	INVALIDPRICE = -1,
+	STARTOFINTID = 1,
+	INVALIDINTID = 0
 } Constants;
 
 }

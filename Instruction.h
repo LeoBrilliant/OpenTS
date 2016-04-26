@@ -10,6 +10,8 @@
 
 #include "RightTimePoint.h"
 #include "Constants.h"
+#include "Types.h"
+
 #include <string>
 
 using namespace std;
@@ -19,11 +21,13 @@ class Instruction
 {
 public:
 	Instruction();
+	Instruction(IntIDType clientID, InstructionType instType, int instID = IncInstructionCounter());
 	~Instruction();
 
 private:
-	int InstructionID;
-	string CliendID;
+	IntIDType InstructionID;
+	IntIDType ClientID;
+	InstructionType InstType;
 	RightTimePoint InsertTime;
 	RightTimePoint ConfirmedTime;
 	RightTimePoint UpdateTime;
@@ -34,8 +38,8 @@ public:
 	static int GetInstructionCounter();
 	static int IncInstructionCounter();
 
-	const string& GetCliendId() const;
-	void SetCliendId(const string& cliendId);
+	IntIDType GetClientId() const;
+	void SetClientId(IntIDType cliendId);
 
 	const RightTimePoint& GetConfirmedTime() const;
 	void SetConfirmedTime(RightTimePoint& confirmedTime);
@@ -52,6 +56,8 @@ public:
 	const RightTimePoint& GetUpdateTime() const;
 	void SetUpdateTime(RightTimePoint& updateTime);
 	void SetUpdateTime();
+	InstructionType GetInstType() const;
+	void SetInstType(InstructionType instType);
 };
 
 
