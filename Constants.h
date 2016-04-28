@@ -8,6 +8,8 @@
 #ifndef CONSTANTS_H_
 #define CONSTANTS_H_
 
+#include "Types.h"
+
 namespace constants
 {
 typedef enum
@@ -16,9 +18,19 @@ typedef enum
 	INVALIDINSTRUMENTID = -1,
 	INVALIDVOLUME = -1,
 	INVALIDPRICE = -1,
+
 	STARTOFINTID = 1,
-	INVALIDINTID = 0
+	INVALIDINTID = 0,
+
+	//Pointer
+	NULLPOINTER = 0,
+
+	//Execution Result
+	SUCCESS = 0,
+	FAILURE = -1
 } Constants;
+
+const char InvalidString[] = "INVALIDSTRING";
 
 }
 

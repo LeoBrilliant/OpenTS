@@ -9,25 +9,32 @@
 #define INSTRUMENT_H_
 
 #include <String>
+#include "Types.h"
+#include "Constants.h"
 
 using namespace std;
+using namespace constants;
 
 class Instrument
 {
 public:
 	Instrument();
-
+	~Instrument();
 private:
+	//合约名称
+	StringType Name;
+	//合约代码
+	StringType Code;
 	//合约标的
-	string Underlying;
+	StringType Underlying;
 	//合约乘数
-	int Multiplier;
+	VolumeType Multiplier;
 	//报价单位
-	int QuotationUnit;
+	VolumeType QuotationUnit;
 	//最小变动价位
-	double Tick;
+	PriceType Tick;
 	//合约月份
-	string Month;
+	StringType Month;
 	//交易时间
 	//每日价格最大波动限制
 	//最低交易保证金

@@ -21,12 +21,12 @@ private:
 
 public:
 	//Constructor
-	Queue():qt() { cout << "VectorOps Constructor: Default" << endl;  }
-	Queue(const Container & c): qt(c) { cout << "VectorOps Constructor: Copy Container" << endl; }
-	Queue(Queue<T, Container> & q): qt(q.GetQt()) { cout << "VectorOps Constructor: Copy" << endl;}
+	Queue():qt() { cout << "Queue Constructor: Default" << endl;  }
+	Queue(const Container & c): qt(c) { cout << "Queue Constructor: Copy Container" << endl; }
+	Queue(Queue<T, Container> & q): qt(q.GetQt()) { cout << "Queue Constructor: Copy" << endl;}
 
 	//Destructor
-	~Queue() { while(! qt.empty()) qt.pop(); cout << "DequeOps Destructor: Default" << endl; }
+	~Queue() { while(! qt.empty()) qt.pop(); cout << "Queue Destructor: Default" << endl; }
 
 	//Capacity
 	bool Empty() const { return qt.empty(); }
@@ -38,6 +38,7 @@ public:
 
 	//Modifier
 	void Push(const T& val) { qt.push(val); }
+	void Push(T& val) { qt.push(val); }
 	void Pop() { qt.pop(); }
 
 	//Getter

@@ -8,9 +8,12 @@
 #ifndef TYPES_H_
 #define TYPES_H_
 
+#include <string>
 typedef double PriceType;
 typedef unsigned int VolumeType;
 typedef unsigned int IntIDType;
+typedef int ReturnType;
+typedef std::string StringType;
 
 typedef enum
 {
@@ -43,5 +46,12 @@ typedef enum
 	ALLTRADED=4,
 	CANCELLED=5
 } OrderStatusType;
+
+typedef enum
+{
+	CALLAUCTION = 1,
+	CONTINUOUSAUCTION = 2,
+	BLOCKTRADING = 3
+}AuctionType;
 
 #endif /* TYPES_H_ */

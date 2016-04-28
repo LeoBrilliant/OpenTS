@@ -13,6 +13,7 @@
 #include "ChainHashTable.h"
 #include "Order.h"
 #include "Queue.h"
+#include "Types.h"
 
 class OrderBook
 {
@@ -31,8 +32,25 @@ private:
 	//订单档位优先队列
 	//TODO先不考虑行情
 	//订单队列
+	Queue<Order*> OrderFlow;
 
-	Queue<Order&> OrderQueue;
+	//最新价
+	PriceType LastPrice;
+
+public:
+	//插入订单队列
+	ReturnType InsertOrderFlow(Order & o);
+	//插入买订单簿
+	ReturnType InsertOrderHashQueue(Order * op);
+	//插入卖订单簿
+	//ReturnType InsertAskOrder(Order * op);
+	//获取最优一档订单
+	Order * GetBestPriceOrder(DirectionType direction);
+	//Todo 撤销订单
+	//撮合算法
+	ReturnType OrderMatching(AuctionType auction);
+	//ToDo 记录委托流
+	//ToDo 记录成交流
 };
 
 
