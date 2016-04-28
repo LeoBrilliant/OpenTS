@@ -22,12 +22,9 @@ typedef enum
 	STARTOFINTID = 1,
 	INVALIDINTID = 0,
 
-<<<<<<< HEAD
 	//Pointer
 	NULLPOINTER = 0,
 
-=======
->>>>>>> refs/remotes/origin/master
 	//Execution Result
 	SUCCESS = 0,
 	FAILURE = -1

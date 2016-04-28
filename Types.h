@@ -13,10 +13,7 @@ typedef double PriceType;
 typedef unsigned int VolumeType;
 typedef unsigned int IntIDType;
 typedef int ReturnType;
-<<<<<<< HEAD
 typedef std::string StringType;
-=======
->>>>>>> refs/remotes/origin/master
 
 typedef enum
 {
