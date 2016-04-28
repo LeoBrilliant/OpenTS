@@ -11,6 +11,7 @@
 typedef double PriceType;
 typedef unsigned int VolumeType;
 typedef unsigned int IntIDType;
+typedef int ReturnType;
 
 typedef enum
 {
