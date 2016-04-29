@@ -37,9 +37,12 @@ private:
 	//最新价
 	PriceType LastPrice;
 
+	//竞价类型
+	AuctionType Auction;
+
 public:
 	//插入订单队列
-	ReturnType InsertOrderFlow(Order & o);
+	ReturnType InsertOrderFlow(Order * o);
 	//插入买订单簿
 	ReturnType InsertOrderHashQueue(Order * op);
 	//插入卖订单簿
@@ -48,9 +51,18 @@ public:
 	Order * GetBestPriceOrder(DirectionType direction);
 	//Todo 撤销订单
 	//撮合算法
-	ReturnType OrderMatching(AuctionType auction);
+	ReturnType OrderMatching(Order * op);
 	//ToDo 记录委托流
 	//ToDo 记录成交流
+
+	//获取最新价
+	inline PriceType GetLastPrice();
+private:
+	//获取对手方
+	Order * GetCounterParties(Order *op);
+	//获取限价指令成交价
+	PriceType GetTradingPrice(Order * buy, Order * sell);
+
 };
 
 

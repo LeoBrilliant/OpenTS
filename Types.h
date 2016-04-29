@@ -49,6 +49,7 @@ typedef enum
 
 typedef enum
 {
+	UNKNOWNAUCTION = 0,
 	CALLAUCTION = 1,
 	CONTINUOUSAUCTION = 2,
 	BLOCKTRADING = 3
