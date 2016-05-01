@@ -14,6 +14,7 @@
 #include "Order.h"
 #include "Queue.h"
 #include "Types.h"
+#include "OrderChainHashTable.h"
 
 class OrderBook
 {
@@ -26,8 +27,8 @@ private:
 	//合约信息
 	Instrument * IntrumentInfo;
 	//订单档位哈希队列
-	ChainHashTable<Order*, string> BidOrderHashQueue;
-	ChainHashTable<Order*, string> AskOrderHashQueue;
+	OrderChainHashTable BidOrderHashQueue;
+	OrderChainHashTable AskOrderHashQueue;
 
 	//订单档位优先队列
 	//TODO先不考虑行情
@@ -62,6 +63,8 @@ private:
 	Order * GetCounterParties(Order *op);
 	//获取限价指令成交价
 	PriceType GetTradingPrice(Order * buy, Order * sell);
+	//获取成交量
+	VolumeType GetTradingVolume(Order* buy, Order* sell);
 
 };
 

@@ -44,12 +44,12 @@ Order* OrderBook::GetBestPriceOrder(DirectionType direction) {
 	switch(direction)
 	{
 	case DirectionType::BUY:
-		//this->BidOrderHashQueue.GetBestPriceOrder();
 		bestPriceOrder = NULL;
+		bestPriceOrder = this->BidOrderHashQueue.GetBestPriceOrder();
 		break;
 	case DirectionType::SELL:
-		//this->AskOrderHashQueue.GetBestPriceOrder();
 		bestPriceOrder = NULL;
+		bestPriceOrder = this->AskOrderHashQueue.GetBestPriceOrder();
 		break;
 	default:
 		bestPriceOrder = NULL;
@@ -63,8 +63,28 @@ ReturnType OrderBook::OrderMatching(Order * op) {
 	case AuctionType::CALLAUCTION:
 		break;
 	case AuctionType::CONTINUOUSAUCTION:
-
-		//
+		this->InsertOrderFlow(op);
+		Order * counterParty = this->GetCounterParties(op);
+		PriceType matchingPrice = Constants::INVALIDPRICE;
+		VolumeType matchingVolume = Constants::INVALIDVOLUME;
+		if(op->GetDirection() == DirectionType::BUY)
+		{
+			matchingPrice = this->GetTradingPrice(op, counterParty);
+			matchingVolume = this->GetTradingVolume(op, counterParty);
+		}
+		else if(op->GetDirection() == DirectionType::SELL)
+		{
+			matchingPrice = this->GetTradingPrice(counterParty, op);
+			matchingVolume = this->GetTradingVolume(counterParty, op);
+		}
+		else
+		{
+			//Unknown Direction, Shouldn't be here
+		}
+		//写入成交流
+		//更新最新价
+		//更新行情
+		//更新持仓
 		break;
 	default:
 		break;
@@ -73,21 +93,19 @@ ReturnType OrderBook::OrderMatching(Order * op) {
 }
 
 Order* OrderBook::GetCounterParties(Order* op) {
-	Order * bestPriceOrder = NULL;
+	Order * counterParty = NULL;
 	switch(op->GetDirection())
 	{
 	case DirectionType::BUY:
-		//this->BidOrderHashQueue.GetBestPriceOrder();
-		bestPriceOrder = NULL;
+		counterParty = this->BidOrderHashQueue.GetBestPriceOrder();
 		break;
 	case DirectionType::SELL:
-		//this->AskOrderHashQueue.GetBestPriceOrder();
-		bestPriceOrder = NULL;
+		counterParty = this->AskOrderHashQueue.GetBestPriceOrder();
 		break;
 	default:
-		bestPriceOrder = NULL;
+		counterParty = NULL;
 	}
-	return bestPriceOrder;
+	return counterParty;
 }
 
 PriceType OrderBook::GetTradingPrice(Order* buy, Order* sell) {
@@ -95,7 +113,8 @@ PriceType OrderBook::GetTradingPrice(Order* buy, Order* sell) {
 	if(buy->GetOrderPrice() < sell->GetOrderPrice())
 	{
 		tradingPrice = Constants::INVALIDPRICE;
-	}else if(this->GetLastPrice() <= sell->GetOrderPrice())
+	}
+	else if(this->GetLastPrice() <= sell->GetOrderPrice())
 	{
 		tradingPrice = sell->GetOrderPrice();
 	}
@@ -112,6 +131,19 @@ PriceType OrderBook::GetTradingPrice(Order* buy, Order* sell) {
 		tradingPrice = Constants::INVALIDPRICE;
 	}
 	return tradingPrice;
+}
+
+VolumeType OrderBook::GetTradingVolume(Order* buy, Order* sell) {
+	VolumeType tradingVolume = Constants::INVALIDVOLUME;
+	if(buy->GetVolumeLeft() < sell->GetVolumeLeft())
+	{
+		tradingVolume = buy->GetVolumeLeft();
+	}
+	else
+	{
+		tradingVolume = sell->GetVolumeLeft();
+	}
+	return tradingVolume;
 }
 
 inline PriceType OrderBook::GetLastPrice() {
