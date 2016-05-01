@@ -27,10 +27,10 @@ ReturnType OrderBook::InsertOrderHashQueue(Order* op) {
 	switch(op->GetDirection())
 	{
 	case DirectionType::BUY:
-		this->BidOrderHashQueue.Insert(& op);
+		this->BidOrderHashQueue.Insert(op);
 		break;
 	case DirectionType::SELL:
-		this->AskOrderHashQueue.Insert(& op);
+		this->AskOrderHashQueue.Insert(op);
 		break;
 	default:
 		return Constants::FAILURE;

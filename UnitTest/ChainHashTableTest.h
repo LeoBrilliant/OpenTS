@@ -68,6 +68,8 @@ public:
 	static unsigned int GetCasePassed(){ return casePassed; }
 	static unsigned int IncCasePassed(){ return ++casePassed; }
 
+	static void UnitTestStats();
+
 };
 
 template<typename Key, typename Value>
@@ -79,55 +81,47 @@ template<typename Key, typename Value>
 void ChainHashTableTest<Key, Value>::TestSuite()
 {
 	this->ContructorTest();
+
+	UnitTestStats();
 }
 
 template<typename Key>
-int HashFunc(const Key * key)
+int HashFunc(const Key key)
 {
-	return abs(*key) * 1;
+	return abs(key) * 1;
 }
 
 template<typename Key>
-int MatchFunc(Key *key1, Key *key2)
+int MatchFunc(Key key1, Key key2)
 {
 	return key1 == key2;
 }
 
 template<typename Key>
-void DestroyFunc(Key * key)
+void DestroyFunc(Key key)
 {
-	*key = -11;
+	key = -11;
 }
 
 template<typename Key, typename Value>
 void ChainHashTableTest<Key, Value>::ContructorTest()
 {
-	//cout << __FUNCTION__ << endl;
-
 	ProgramMessage::Debug(__FUNCTION__);
-	//cout << "TestCase(" << IncCaseCount() << ")" ;
-	//	string s = "TestCase(" ;
-	//	s = s + "1";
 	ProgramMessage::Debug<int>(IncCaseCount());
-	//ProgramMessage::EndOfLine();
 	ChainHashTable<Key, Value> cht1;
-	//cout << typeid(cht1).name() << "\t";
 	ProgramMessage::Debug(typeid(cht1).name());
 	assert( typeid(cht1) == typeid(ChainHashTable<Key, Value>));
-	//assert( &cht1 != NULL);
 	assert(cht1.Size() == 0);
 	cht1.GetDetail("Hello");
-	//cht1.GetSummary();
 	IncCasePassed();
-	//cout << "Passed" << endl;
 	ProgramMessage::Debug("Passed");
 
 	ProgramMessage::Debug<int>(IncCaseCount());
 	{
 		assert(typeid(Key) == typeid(int));
-		typedef int (*PFHash)(const Key *key);
-		typedef int (*PFMatch)(Key *key1, Key *key2);
-		typedef	void (*PFDestroy)(Key *data);
+		typedef int (*PFHash)(const Key key);
+		typedef int (*PFMatch)(Key key1, Key key2);
+		typedef	void (*PFDestroy)(Key data);
 
 		PFHash fpHash = HashFunc;
 		PFMatch fpMatch = MatchFunc;
@@ -147,7 +141,7 @@ void ChainHashTableTest<Key, Value>::ContructorTest()
 		for(int i = 0; i < iBuckets; ++i)
 		{
 			array[i] = i;
-			cht1.Insert(&array[i]);
+			cht1.Insert(array[i]);
 		}
 		for(int i = 0; i < iBuckets; ++i)
 		{
@@ -183,9 +177,10 @@ void ChainHashTableTest<Key, Value>::ContructorTest()
 		for(int i = 0; i < iBuckets; ++i)
 		{
 			array[i] = val;
-			cht1.Insert(&array[i]);
+			cht1.Insert(array[i]);
 		}
-		assert(cht1.Size() == iBuckets);
+		//assert(cht1.Size() == iBuckets);
+		assert(cht1.Size() == 1);
 		for(int i = 0; i < iBuckets; ++i)
 		{
 			for(typename List<Key>::LstCstIter iter = cht1.GetBeginIter(i); iter != cht1.GetEndIter(i); ++iter)
@@ -194,15 +189,21 @@ void ChainHashTableTest<Key, Value>::ContructorTest()
 				counter++;
 			}
 		}
-		//assert(counter == 1);
-		assert(counter == iBuckets);
+		assert(counter == 1);
+		//assert(counter == iBuckets);
 		cht1.GetDetail("Insert Array");
 		IncCasePassed();
 		ProgramMessage::Debug("Passed");
 	}
 }
 
-
+template<typename Key, typename Value>
+void ChainHashTableTest<Key, Value>::UnitTestStats() {
+	ProgramMessage::Print<Key>(ChainHashTableTest<Key, Value>::GetCaseCount());
+	ProgramMessage::Print(" Cases in total, ");
+	ProgramMessage::Print<Key>(ChainHashTableTest<Key, Value>::GetCasePassed());
+	ProgramMessage::PrintLine(" Cases Passed.");
+}
 
 
 #endif /* UNITTEST_CHAINHASHTABLETEST_H_ */

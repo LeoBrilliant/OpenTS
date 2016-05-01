@@ -34,9 +34,9 @@ public:
 
 	ChainHashTable(
 			int buckets,
-			int (*h)(const Key *key),
-			int (*match)(Key *key1, Key *key2),
-			void (*destroy)(Key *data)
+			int (*h)(const Key key),
+			int (*match)(Key key1, Key key2),
+			void (*destroy)(Key data)
 	);
 
 	~ChainHashTable();
@@ -44,32 +44,32 @@ public:
 private:
 	int buckets;
 
-	int (*h)(const Key *key);
-	int (*match)(Key *key1, Key *key2);
-	void (*destroy)(Key *data);
+	int (*h)(const Key key);
+	int (*match)(Key key1, Key key2);
+	void (*destroy)(Key data);
 
 	int size;
 
 	List<Key> * table;
 
-	int chtbl_init(int buckets, int (*h)(const Key *key),
-			int (*match)(const Key *key1, const Key *key2),
-			void (*destroy)(Key *data));
+	int chtbl_init(int buckets, int (*h)(const Key key),
+			int (*match)(const Key key1, const Key key2),
+			void (*destroy)(Key data));
 
 	void chtbl_destroy();
 
-	int chtbl_insert(Key *data);
+	int chtbl_insert(Key data);
 
-	int chtbl_remove(Key **data);
+	int chtbl_remove(Key data);
 
-	int chtbl_lookup(Key **data);
+	int chtbl_lookup(Key data);
 
 public:
 	inline int Size() {return this->size;}
 
-	inline int Insert(Key *data){ return chtbl_insert(data); }
-	inline int Remove(Key **data){ return chtbl_remove(data); }
-	inline int LookUp(Key **data){ return chtbl_lookup(data); }
+	inline int Insert(Key data){ return chtbl_insert(data); }
+	inline int Remove(Key data){ return chtbl_remove(data); }
+	inline int LookUp(Key data){ return chtbl_lookup(data); }
 
 	typename List<Key>::LstCstIter GetBeginIter(int i);
 	typename List<Key>::LstCstIter GetEndIter(int i);
@@ -96,9 +96,9 @@ public:
 template<typename Key, typename Value>
 ChainHashTable<Key,Value>::ChainHashTable(
 		int buckets,
-		int (*hash)(const Key *key),
-		int (*match)(Key *key1, Key *key2),
-		void (*destroy)(Key *data)) : buckets(buckets), h(hash), match(match), destroy(destroy)
+		int (*hash)(const Key key),
+		int (*match)(Key key1, Key key2),
+		void (*destroy)(Key data)) : buckets(buckets), h(hash), match(match), destroy(destroy)
 {
 	//int i;
 	//Key k;
@@ -138,9 +138,9 @@ ChainHashTable<Key,Value>::~ChainHashTable()
 }
 
 template<typename Key, typename Value>
-int ChainHashTable<Key,Value>::chtbl_init(int buckets, int (*h)(const Key *key),
-		int (*match)(const Key *key1, const Key *key2),
-		void (*destroy)(Key *data))
+int ChainHashTable<Key,Value>::chtbl_init(int buckets, int (*h)(const Key key),
+		int (*match)(const Key key1, const Key key2),
+		void (*destroy)(Key data))
 {
 	int i;
 	Key k;
@@ -187,43 +187,36 @@ void ChainHashTable<Key,Value>::chtbl_destroy()
 }
 
 template<typename Key, typename Value>
-int ChainHashTable<Key,Value>::chtbl_insert(Key *data)
+int ChainHashTable<Key,Value>::chtbl_insert(Key data)
 {
-	Key *temp;
+	Key temp;
 	int bucket, retval;
 
 	temp = data;
-	if(this->chtbl_lookup(&temp) == 0)
+	if(this->chtbl_lookup(temp) == ConstValue::ELEMENT_FOUND)
 	{
-		return -1;
+		return ConstValue::FAILED;
 	}
 
 	bucket = this->h(data) % this->buckets;
 
-	//if((retval = list_ins_next(&this->table[bucket], NULL, data)) == 0)
-	//	this->size++;
-
-	this->table[bucket].PushBack(*data);
+	this->table[bucket].PushBack(data);
 	this->size++;
 
 	return retval=this->Size();
 }
 
 template<typename Key, typename Value>
-int ChainHashTable<Key,Value>::chtbl_remove(Key **data)
+int ChainHashTable<Key,Value>::chtbl_remove(Key data)
 {
-	Key *element, *prev;
+	Key element, prev;
 	int  bucket;
 
-	bucket = this->h(*data) % this->buckets;
+	bucket = this->h(data) % this->buckets;
 
-	//prev = NULL;
-
-	//for(element = list_head(&this->table[bucket]); element != NULL;
-	//		element = list_next(element))
 	for(typename List<Key>::LstIter element = this->table[bucket].Begin(); element != this->table[bucket].Begin(); element++)
 	{
-		if(this->match(*data, *element))
+		if(this->match(data, *element))
 		{
 			this->table[bucket].Erase(element);
 			this->size--;
@@ -235,18 +228,17 @@ int ChainHashTable<Key,Value>::chtbl_remove(Key **data)
 	return ConstValue::FAILED;
 }
 template<typename Key, typename Value>
-int ChainHashTable<Key,Value>::chtbl_lookup(Key **data)
+int ChainHashTable<Key,Value>::chtbl_lookup(Key data)
 {
-	//Key *element;
 	int bucket;
 
-	bucket = this->h(*data) % this->buckets;
+	bucket = this->h(data) % this->buckets;
 
 	for(typename List<Key>::LstCstIter element = this->table[bucket].Begin(); element != this->table[bucket].End(); element++)
 	{
-		if(this->match(*data, (Key *)&(*element)))
+		if(this->match(data, *element))
 		{
-			**data = *element;
+			data = *element;
 			return ConstValue::ELEMENT_FOUND;
 		}
 	}
@@ -256,12 +248,7 @@ int ChainHashTable<Key,Value>::chtbl_lookup(Key **data)
 template<typename Key, typename Value>
 void ChainHashTable<Key,Value>::GetSummary()
 {
-	//cout << "Summary[" << endl;
 	ProgramMessage::Debug("Summary[");
-	//cout << "empty: \t" << (this->Empty()? "True":"False") << "\t" << endl;
-	//cout << "size: \t" << this->Size() << endl;
-	//cout << "max_size: \t" << this->MaxSize() << endl;
-	//cout << "]" << endl;
 	ProgramMessage::Debug("size:\t");
 	ProgramMessage::Debug<int>(this->Size());
 	ProgramMessage::Debug("]");
@@ -269,10 +256,6 @@ void ChainHashTable<Key,Value>::GetSummary()
 
 template<typename Key, typename Value>
 inline typename List<Key>::LstCstIter ChainHashTable<Key, Value>::GetBeginIter(int i) {
-//	if(i >= 0 && i < this->buckets)
-//		return this->table[i].Begin();
-//	else
-//		return NULL;
 	return this->table[i].Begin();
 }
 
@@ -295,27 +278,16 @@ inline void ChainHashTable<Key, Value>::Clear() {
 template<typename Key, typename Value>
 void ChainHashTable<Key,Value>::GetDetail(const string & s)
 {
-	//cout << s << endl;
 	ProgramMessage::Debug(s);
 	this->GetSummary();
-	//cout << "Elements[" << endl;
 	ProgramMessage::Debug("Elements[");
 	for(int i=0; i < this->buckets; ++i)
 	{
 		ProgramMessage::Debug("bucket");
-		//ProgramMessage::Debug<int>(i);
 		char str[20];
-		//itoa(i, str, 10);
 		sprintf(str, "%d", i);
 		this->table[i].GetDetail(str);
-/*		typename List<Key>::LstCstIter iv = this->table[i].Begin();
-		while(iv != this->table[i].End())
-		{
-			cout << "<" << (*iv) << ">" ;
-			++iv;
-		}	*/
 	}
-	//cout << "]" << endl;
 	ProgramMessage::Debug("]");
 }
 

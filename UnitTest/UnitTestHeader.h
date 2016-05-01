@@ -21,9 +21,9 @@ void UnitTestEntrance()
 {
 	ProgramMessage::Debug(__FUNCTION__);
 
-	TimePointUT();
+	//TimePointUT();
 
-	//ChainHashTableUT();
+	ChainHashTableUT();
 
 	//ListUT();
 }
@@ -37,8 +37,8 @@ void TimePointUT()
 void ChainHashTableUT()
 {
 	ChainHashTableTest<int, char> chtt;
-	chtt.ContructorTest();
-	//chtt.TestSuite();
+	//chtt.ContructorTest();
+	chtt.TestSuite();
 
 }
 
