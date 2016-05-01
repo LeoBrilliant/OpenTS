@@ -23,7 +23,7 @@ class ChainHashTable
 public:
 	ChainHashTable(){
 		this->buckets = 0;
-		this->h = NULL;
+		this->hashfunc = NULL;
 		this->match = NULL;
 		this->destroy = NULL;
 		this->size = 0;
@@ -34,7 +34,7 @@ public:
 
 	ChainHashTable(
 			int buckets,
-			int (*h)(const Key key),
+			int (*hashfunc)(const Key key),
 			int (*match)(Key key1, Key key2),
 			void (*destroy)(Key data)
 	);
@@ -44,7 +44,7 @@ public:
 private:
 	int buckets;
 
-	int (*h)(const Key key);
+	int (*hashfunc)(const Key key);
 	int (*match)(Key key1, Key key2);
 	void (*destroy)(Key data);
 
@@ -81,6 +81,16 @@ public:
 	virtual void GetDetail(const string& s);
 	virtual int GetBuckets() const;
 	virtual const List<Key>* GetTable() const;
+	void SetHashfunc(int (*hashfunc)(const Key key));
+	void SetMatch(int (*match)(Key key1, Key key2));
+
+	void SetBuckets(int buckets) {
+		this->buckets = buckets;
+	}
+
+	void SetTable(List<Key>* table) {
+		this->table = table;
+	}
 
 	static const enum ConstValue
 	{
@@ -100,7 +110,8 @@ ChainHashTable<Key,Value>::ChainHashTable(
 		int buckets,
 		int (*hash)(const Key key),
 		int (*match)(Key key1, Key key2),
-		void (*destroy)(Key data)) : buckets(buckets), h(hash), match(match), destroy(destroy)
+		void (*destroy)(Key data)) :
+		buckets(buckets), hashfunc(hash), match(match), destroy(destroy)
 {
 	//int i;
 	//Key k;
@@ -140,7 +151,7 @@ ChainHashTable<Key,Value>::~ChainHashTable()
 }
 
 template<typename Key, typename Value>
-int ChainHashTable<Key,Value>::chtbl_init(int buckets, int (*h)(const Key key),
+int ChainHashTable<Key,Value>::chtbl_init(int buckets, int (*hashfunc)(const Key key),
 		int (*match)(const Key key1, const Key key2),
 		void (*destroy)(Key data))
 {
@@ -162,7 +173,7 @@ int ChainHashTable<Key,Value>::chtbl_init(int buckets, int (*h)(const Key key),
 		//list_init(&this->table[i], destroy);
 	}
 
-	this->h = h;
+	this->hashfunc = hashfunc;
 	this->match = match;
 	this->destroy = destroy;
 
@@ -200,7 +211,7 @@ int ChainHashTable<Key,Value>::chtbl_insert(Key data)
 		return ConstValue::FAILED;
 	}
 
-	bucket = this->h(data) % this->buckets;
+	bucket = this->hashfunc(data) % this->buckets;
 
 	this->table[bucket].PushBack(data);
 	this->size++;
@@ -214,7 +225,7 @@ int ChainHashTable<Key,Value>::chtbl_remove(Key data)
 	Key element, prev;
 	int  bucket;
 
-	bucket = this->h(data) % this->buckets;
+	bucket = this->hashfunc(data) % this->buckets;
 
 	for(typename List<Key>::LstIter element = this->table[bucket].Begin(); element != this->table[bucket].Begin(); element++)
 	{
@@ -234,7 +245,7 @@ int ChainHashTable<Key,Value>::chtbl_lookup(Key data)
 {
 	int bucket;
 
-	bucket = this->h(data) % this->buckets;
+	bucket = this->hashfunc(data) % this->buckets;
 
 	for(typename List<Key>::LstCstIter element = this->table[bucket].Begin(); element != this->table[bucket].End(); element++)
 	{
@@ -280,6 +291,18 @@ inline void ChainHashTable<Key, Value>::Clear() {
 template<typename Key, typename Value>
 inline int ChainHashTable<Key, Value>::GetBuckets() const {
 	return buckets;
+}
+
+template<typename Key, typename Value>
+inline void ChainHashTable<Key,Value>::SetHashfunc(int (*hashfunc)(const Key key))
+{
+	this->hashfunc = hashfunc;
+}
+
+template<typename Key, typename Value>
+inline void ChainHashTable<Key,Value>::SetMatch(int (*match)(Key key1, Key key2))
+{
+	this->match = match;
 }
 
 template<typename Key, typename Value>

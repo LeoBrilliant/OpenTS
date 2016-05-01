@@ -18,6 +18,12 @@ class OrderChainHashTable : public ChainHashTable<Order*, string>
 {
 public:
 	OrderChainHashTable();
+	OrderChainHashTable(
+			DirectionType direction,
+			PriceType tick,
+			PriceType upperPriceBound,
+			PriceType lowerPriceBound
+	);
 	virtual ~OrderChainHashTable();
 	Order* GetBestPriceOrder();
 	PriceType GetBestPrice();
@@ -26,6 +32,20 @@ public:
 
 private:
 	DirectionType Direction;
+	PriceType Tick;
+	PriceType UpperPriceBound;
+	PriceType LowerPriceBound;
+
+	int HashFunc(Order* key);
+
+	int MatchFunc(Order* key1, Order* key2);
+
+	IntIDType CalBuckets();
+
+	PriceType GetMaxPrice();
+	PriceType GetMinPrice();
+	PriceType GetLevelPrice(IntIDType level);
+	Order* GetFirstOrder(PriceType price);
 };
 
 
