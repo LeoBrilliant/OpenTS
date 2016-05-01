@@ -24,18 +24,19 @@ ReturnType OrderBook::InsertOrderFlow(Order* o) {
 }
 
 ReturnType OrderBook::InsertOrderHashQueue(Order* op) {
+	ReturnType ret = Constants::FAILURE;
 	switch(op->GetDirection())
 	{
 	case DirectionType::BUY:
-		this->BidOrderHashQueue.Insert(op);
+		ret = this->BidOrderHashQueue.Insert(op);
 		break;
 	case DirectionType::SELL:
-		this->AskOrderHashQueue.Insert(op);
+		ret = this->AskOrderHashQueue.Insert(op);
 		break;
 	default:
-		return Constants::FAILURE;
+		ret = Constants::FAILURE;
 	}
-	return Constants::SUCCESS;
+	return ret;
 }
 
 Order* OrderBook::GetBestPriceOrder(DirectionType direction) {

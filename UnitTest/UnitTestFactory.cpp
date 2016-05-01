@@ -1,29 +1,21 @@
 /*
- * UnitTestHeader.h
+ * UnitTestFactory.cpp
  *
- *  Created on: 2016年4月24日
+ *  Created on: 2016年5月1日
  *      Author: LeoBrilliant
  */
 
-#ifndef UNITTEST_UNITTESTHEADER_H_
-#define UNITTEST_UNITTESTHEADER_H_
-
-
-#include "ListTest.h"
-#include "ChainHashTableTest.h"
-#include "RightTimePointUnitTest.h"
-
-void TimePointUT();
-void ChainHashTableUT();
-void ListUT();
+#include "UnitTestFactory.h"
 
 void UnitTestEntrance()
 {
 	ProgramMessage::Debug(__FUNCTION__);
 
+	OrderChainHashTableUT();
+
 	//TimePointUT();
 
-	ChainHashTableUT();
+	//ChainHashTableUT();
 
 	//ListUT();
 }
@@ -48,4 +40,7 @@ void ListUT()
 	//lt.TestSuite();
 }
 
-#endif /* UNITTEST_UNITTESTHEADER_H_ */
+void OrderChainHashTableUT() {
+	OrderChainHashTableTest ot;
+	ot.TestSuite();
+}

@@ -64,6 +64,8 @@ public:
 	static unsigned int GetCasePassed(){ return casePassed; }
 	static unsigned int IncCasePassed(){ return ++casePassed; }
 
+	static void UnitTestStats();
+
 	//Destructor
 	virtual ~UTBase(){};
 
@@ -73,6 +75,64 @@ template<typename T>
 unsigned int UTBase<T>::caseCount = 0;
 template<typename T>
 unsigned int UTBase<T>::casePassed = 0;
+
+template<typename T>
+inline void UTBase<T>::ContructorTest() {
+}
+
+template<typename T>
+inline void UTBase<T>::OperatorEqualTest() {
+}
+
+template<typename T>
+inline void UTBase<T>::OperatorNewTest() {
+}
+
+template<typename T>
+inline void UTBase<T>::ExceptioinTest() {
+}
+
+template<typename T>
+inline void UTBase<T>::SignalTest() {
+}
+
+template<typename T>
+inline void UTBase<T>::OperatorSquareBracketsTest() {
+}
+
+template<typename T>
+inline void UTBase<T>::ApplyTest() {
+}
+
+template<typename T>
+inline void UTBase<T>::ShiftTest() {
+}
+
+template<typename T>
+inline void UTBase<T>::ResizeTest() {
+}
+
+template<typename T>
+inline void UTBase<T>::TestSuite() {
+	this->ApplyTest();
+	this->ContructorTest();
+	this->ExceptioinTest();
+	this->OperatorEqualTest();
+	this->OperatorNewTest();
+	this->OperatorSquareBracketsTest();
+	this->ResizeTest();
+	this->ShiftTest();
+	this->SignalTest();
+	this->UnitTestStats();
+}
+
+template<typename T>
+void UTBase<T>::UnitTestStats() {
+	ProgramMessage::Print<T>(UTBase<T>::GetCaseCount());
+	ProgramMessage::Print(" Cases in total, ");
+	ProgramMessage::Print<T>(UTBase<T>::GetCasePassed());
+	ProgramMessage::PrintLine(" Cases Passed.");
+}
 
 
 #endif /* UNITTEST_UTBASE_H_ */

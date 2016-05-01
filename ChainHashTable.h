@@ -39,7 +39,7 @@ public:
 			void (*destroy)(Key data)
 	);
 
-	~ChainHashTable();
+	virtual ~ChainHashTable();
 
 private:
 	int buckets;
@@ -71,14 +71,16 @@ public:
 	inline int Remove(Key data){ return chtbl_remove(data); }
 	inline int LookUp(Key data){ return chtbl_lookup(data); }
 
-	typename List<Key>::LstCstIter GetBeginIter(int i);
-	typename List<Key>::LstCstIter GetEndIter(int i);
+	virtual typename List<Key>::LstCstIter GetBeginIter(int i);
+	virtual typename List<Key>::LstCstIter GetEndIter(int i);
 
-	inline void Clear();
+	virtual inline void Clear();
 
-	void GetSummary();
+	virtual void GetSummary();
 
-	void GetDetail(const string& s);
+	virtual void GetDetail(const string& s);
+	virtual int GetBuckets() const;
+	virtual const List<Key>* GetTable() const;
 
 	static const enum ConstValue
 	{
@@ -273,6 +275,16 @@ inline void ChainHashTable<Key, Value>::Clear() {
 		this->table[i].Clear();
 	}
 	this->size = 0;
+}
+
+template<typename Key, typename Value>
+inline int ChainHashTable<Key, Value>::GetBuckets() const {
+	return buckets;
+}
+
+template<typename Key, typename Value>
+inline const List<Key>* ChainHashTable<Key, Value>::GetTable() const {
+	return table;
 }
 
 template<typename Key, typename Value>

@@ -9,7 +9,7 @@
 
 using namespace std;
 
-#include "UnitTest/UnitTestHeader.h"
+#include "UnitTest/UnitTestFactory.h"
 
 int main()
 {

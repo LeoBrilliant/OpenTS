@@ -112,6 +112,8 @@ void ChainHashTableTest<Key, Value>::ContructorTest()
 	ProgramMessage::Debug(typeid(cht1).name());
 	assert( typeid(cht1) == typeid(ChainHashTable<Key, Value>));
 	assert(cht1.Size() == 0);
+	assert(cht1.GetBuckets() == 0);
+	assert(cht1.GetTable() == NULL);
 	cht1.GetDetail("Hello");
 	IncCasePassed();
 	ProgramMessage::Debug("Passed");
