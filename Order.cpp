@@ -129,6 +129,10 @@ VolumeType Order::GetVolumeLeft() const {
 	return VolumeLeft;
 }
 
+void Order::SetCancelTimePoint() {
+	this->CancelTimePoint = RightTimePoint::Now();
+}
+
 void Order::SetVolumeLeft(VolumeType volumeLeft) {
 	VolumeLeft = volumeLeft;
 }

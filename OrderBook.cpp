@@ -19,7 +19,7 @@ OrderBook::~OrderBook() {
 }
 
 ReturnType OrderBook::InsertIntoOrderFlow(Order* o) {
-	this->OrderFlow.Push(o);
+	this->OrderFlow.PushBack(o);
 	return Constants::SUCCESS;
 }
 
@@ -238,12 +238,31 @@ TradingRecord* OrderBook::GenTradingRecord(IntIDType tradeID, Order* op,
 	return rec;
 }
 
+ReturnType OrderBook::OrderAction(Instruction* inst) {
+	ReturnType ret = Constants::FAILURE;
+	Order * op;
+	switch(inst->GetInstType())
+	{
+	case InstructionType::LIMITPRICEORDER:
+		op = (Order *)inst;
+		ret = this->OrderMatching(op);
+		break;
+	case InstructionType::CANCEL:
+		ret = this->CancelOrderAction(inst);
+		break;
+	default:
+		break;
+	}
+
+	return ret;
+}
+
 VoidType OrderBook::SetLastPrice(PriceType lastPrice) {
 	LastPrice = lastPrice;
 }
 
 ReturnType OrderBook::InsertIntoTradingFlow(TradingRecord* rec) {
-	this->TradingFlow.Push(rec);
+	this->TradingFlow.PushBack(rec);
 	return Constants::SUCCESS;
 }
 
@@ -263,5 +282,33 @@ Order* OrderBook::RemoveFromOrderHashQueue(Order* op) {
 	if(ret == Constants::FAILURE)
 		return NULL;
 
+	return op;
+}
+
+ReturnType OrderBook::CancelOrderAction(Instruction* inst) {
+	Order * op = (Order *)inst;
+	ReturnType ret = Constants::FAILURE;
+	op = this->GetOrderByID(op->GetOrderID());
+	if(op != NULL)
+	{
+		this->RemoveFromOrderHashQueue(op);
+		op->SetOrderStatus(OrderStatusType::CANCELLED);
+		op->SetCancelTimePoint();
+		//更新档位委托手数
+		ret = Constants::SUCCESS;
+	}
+	return ret;
+}
+
+//其实可以用二分查找
+Order* OrderBook::GetOrderByID(IntIDType id) {
+	Order * op = NULL;
+	for(List<Order*>::RLstCstIter iter = this->OrderFlow.Rbegin();  iter != this->OrderFlow.Rend(); ++iter)
+	{
+		if((*iter)->GetOrderID() == id)
+		{
+			op = (*iter);
+		}
+	}
 	return op;
 }

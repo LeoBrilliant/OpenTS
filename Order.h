@@ -62,6 +62,7 @@ private:
 public:
 	const RightTimePoint& GetCancelTimePoint() const;
 	void SetCancelTimePoint(RightTimePoint& cancelTimePoint);
+	void SetCancelTimePoint();
 	DirectionType GetDirection() const;
 	void SetDirection(DirectionType direction);
 	const string& GetInstrumentID() const;
