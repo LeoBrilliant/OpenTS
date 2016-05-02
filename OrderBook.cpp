@@ -18,12 +18,12 @@ OrderBook::OrderBook() :
 OrderBook::~OrderBook() {
 }
 
-ReturnType OrderBook::InsertOrderFlow(Order* o) {
+ReturnType OrderBook::InsertIntoOrderFlow(Order* o) {
 	this->OrderFlow.Push(o);
 	return Constants::SUCCESS;
 }
 
-ReturnType OrderBook::InsertOrderHashQueue(Order* op) {
+ReturnType OrderBook::InsertIntoOrderHashQueue(Order* op) {
 	ReturnType ret = Constants::FAILURE;
 	switch(op->GetDirection())
 	{
@@ -58,37 +58,105 @@ Order* OrderBook::GetBestPriceOrder(DirectionType direction) {
 }
 
 ReturnType OrderBook::OrderMatching(Order * op) {
+	Order * counterParty = this->GetCounterParties(op);
+	PriceType matchingPrice;
+	VolumeType matchingVolume;
+	Order * buy, * sell;
+	IntIDType tradeID;
+	TradingRecord * buyRec, *sellRec;
+	RightTimePoint tradingTime;
 	switch(Auction)
 	{
 	case AuctionType::CALLAUCTION:
 		break;
 	case AuctionType::CONTINUOUSAUCTION:
-		this->InsertOrderFlow(op);
-		Order * counterParty = this->GetCounterParties(op);
-		PriceType matchingPrice = Constants::INVALIDPRICE;
-		VolumeType matchingVolume = Constants::INVALIDVOLUME;
-		if(op->GetDirection() == DirectionType::BUY)
+		this->InsertIntoOrderFlow(op);
+		//matchingPrice = Constants::INVALIDPRICE;
+		//matchingVolume = Constants::INVALIDVOLUME;
+		//限价指令撮合
+		while(op->GetVolumeLeft() >= Constants::EMPTYVOLUME)
 		{
-			matchingPrice = this->GetTradingPrice(op, counterParty);
-			matchingVolume = this->GetTradingVolume(op, counterParty);
+			if(op->GetDirection() == DirectionType::BUY)
+			{
+	//			matchingPrice = this->GetTradingPrice(op, counterParty);
+	//			matchingVolume = this->GetTradingVolume(op, counterParty);
+				buy = op;
+				sell = this->GetCounterParties(op);
+			}
+			else if(op->GetDirection() == DirectionType::SELL)
+			{
+	//			matchingPrice = this->GetTradingPrice(counterParty, op);
+	//			matchingVolume = this->GetTradingVolume(counterParty, op);
+				sell = op;
+				buy = this->GetCounterParties(op);
+			}
+			else
+			{
+				//Unknown Direction, Shouldn't be here
+				//NULL;
+			}
+			matchingPrice = this->GetTradingPrice(buy, sell);
+
+			//撮合成功
+			if(matchingPrice != Constants::INVALIDPRICE)
+			{
+				matchingVolume = this->GetTradingVolume(buy, sell);
+				tradeID = TradingRecord::IncRecordCounter();
+				buyRec = this->GenTradingRecord(tradeID, buy, matchingVolume, matchingPrice);
+				sellRec = this->GenTradingRecord(tradeID, sell, matchingVolume, matchingPrice);
+				//写入成交流
+				this->InsertIntoTradingFlow(buyRec);
+				this->InsertIntoTradingFlow(sellRec);
+				//更新最新价
+				this->SetLastPrice(matchingPrice);
+				//Todo 更新行情
+				//Todo 更新持仓
+				//更新订单状态订单剩余量
+				op->SetVolumeLeft(op->GetVolumeLeft() - matchingVolume);
+				if(op->GetVolumeLeft() <= Constants::EMPTYVOLUME)
+				{
+					//全部成交
+					op->SetOrderStatus(OrderStatusType::ALLTRADED);
+				}
+				else
+				{
+					//部分成交
+					op->SetOrderStatus(OrderStatusType::PARTLYTRADED);
+				}
+
+				counterParty->SetVolumeLeft(op->GetVolumeLeft() - matchingVolume);
+				if(counterParty->GetVolume() <= Constants::EMPTYVOLUME)
+				{
+					//全部成交
+					counterParty->SetOrderStatus(OrderStatusType::ALLTRADED);
+					//从档位表中删除订单
+					counterParty = this->RemoveFromOrderHashQueue(counterParty);
+				}
+				else
+				{
+					//部分成交
+					op->SetOrderStatus(OrderStatusType::PARTLYTRADED);
+				}
+
+				tradingTime = RightTimePoint::Now();
+				op->SetUpdateTime(tradingTime);
+				counterParty->SetUpdateTime(tradingTime);
+				//继续撮合
+			}
+			else
+			{
+				//撮合不成功,插入订单簿
+				this->InsertIntoOrderHashQueue(op);
+				break;
+			}
 		}
-		else if(op->GetDirection() == DirectionType::SELL)
-		{
-			matchingPrice = this->GetTradingPrice(counterParty, op);
-			matchingVolume = this->GetTradingVolume(counterParty, op);
-		}
-		else
-		{
-			//Unknown Direction, Shouldn't be here
-		}
-		//写入成交流
-		//更新最新价
-		//更新行情
-		//更新持仓
 		break;
 	default:
 		break;
 	}
+
+	matchingPrice = Constants::INVALIDPRICE;
+	matchingVolume = Constants::INVALIDVOLUME;
 	return Constants::SUCCESS;
 }
 
@@ -135,6 +203,7 @@ PriceType OrderBook::GetTradingPrice(Order* buy, Order* sell) {
 
 VolumeType OrderBook::GetTradingVolume(Order* buy, Order* sell) {
 	VolumeType tradingVolume = Constants::INVALIDVOLUME;
+	//assert(buy->GetVolumeLeft() > 0 && sell->GetVolumeLeft() > 0);
 	if(buy->GetVolumeLeft() < sell->GetVolumeLeft())
 	{
 		tradingVolume = buy->GetVolumeLeft();
@@ -148,4 +217,51 @@ VolumeType OrderBook::GetTradingVolume(Order* buy, Order* sell) {
 
 inline PriceType OrderBook::GetLastPrice() {
 	return this->LastPrice;
+}
+
+TradingRecord* OrderBook::GenTradingRecord(IntIDType tradeID, Order* op,
+		VolumeType volume, PriceType price)
+{
+	TradingRecord * rec = NULL;
+	rec = new TradingRecord(tradeID,
+			op->GetClientID(),
+			RecordType::TRADING,
+			op->GetInstrumentID(),
+			op->GetDirection(),
+			op->GetOffsetFlag(),
+			price,
+			volume,
+			op->GetOrderID(),
+			op->GetLocalOrderID()
+			);
+
+	return rec;
+}
+
+VoidType OrderBook::SetLastPrice(PriceType lastPrice) {
+	LastPrice = lastPrice;
+}
+
+ReturnType OrderBook::InsertIntoTradingFlow(TradingRecord* rec) {
+	this->TradingFlow.Push(rec);
+	return Constants::SUCCESS;
+}
+
+Order* OrderBook::RemoveFromOrderHashQueue(Order* op) {
+	ReturnType ret = Constants::FAILURE;
+	switch(op->GetDirection())
+	{
+	case DirectionType::BUY:
+		ret = this->BidOrderHashQueue.Remove(op);
+		break;
+	case DirectionType::SELL:
+		ret = this->AskOrderHashQueue.Remove(op);
+		break;
+	default:
+		ret = Constants::FAILURE;
+	}
+	if(ret == Constants::FAILURE)
+		return NULL;
+
+	return op;
 }

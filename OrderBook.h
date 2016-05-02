@@ -15,6 +15,8 @@
 #include "Queue.h"
 #include "Types.h"
 #include "OrderChainHashTable.h"
+#include "Constants.h"
+#include "TradingRecord.h"
 
 class OrderBook
 {
@@ -35,6 +37,9 @@ private:
 	//订单队列
 	Queue<Order*> OrderFlow;
 
+	//成交流
+	Queue<TradingRecord*> TradingFlow;
+
 	//最新价
 	PriceType LastPrice;
 
@@ -43,16 +48,10 @@ private:
 
 public:
 	//插入订单队列
-	ReturnType InsertOrderFlow(Order * o);
-	//插入买订单簿
-	ReturnType InsertOrderHashQueue(Order * op);
-	//插入卖订单簿
-	//ReturnType InsertAskOrder(Order * op);
+	ReturnType InsertIntoOrderFlow(Order * o);
 	//获取最优一档订单
 	Order * GetBestPriceOrder(DirectionType direction);
 	//Todo 撤销订单
-	//撮合算法
-	ReturnType OrderMatching(Order * op);
 	//ToDo 记录委托流
 	//ToDo 记录成交流
 
@@ -65,7 +64,20 @@ private:
 	PriceType GetTradingPrice(Order * buy, Order * sell);
 	//获取成交量
 	VolumeType GetTradingVolume(Order* buy, Order* sell);
-
+	//生成成交记录
+	TradingRecord* GenTradingRecord(IntIDType tradeID, Order* op, VolumeType volume, PriceType price);
+	//插入成交流
+	ReturnType InsertIntoTradingFlow(TradingRecord * rec);
+	//插入买订单簿
+	ReturnType InsertIntoOrderHashQueue(Order * op);
+	//插入卖订单簿
+	//ReturnType InsertAskOrder(Order * op);
+	//从订单簿中删除订单
+	Order* RemoveFromOrderHashQueue(Order* op);
+	//撮合算法
+	ReturnType OrderMatching(Order * op);
+	//更新最新价
+	VoidType SetLastPrice(PriceType lastPrice);
 };
 
 

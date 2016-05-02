@@ -16,9 +16,15 @@ typedef enum
 {
 	// InstrumentID
 	INVALIDINSTRUMENTID = -1,
+
+	//Volume
 	INVALIDVOLUME = -1,
+	EMPTYVOLUME = 0,
+
+	//Price
 	INVALIDPRICE = -1,
 
+	//IntTypeID
 	STARTOFINTID = 1,
 	INVALIDINTID = 0,
 

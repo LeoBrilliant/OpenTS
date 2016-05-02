@@ -14,6 +14,7 @@ typedef unsigned int VolumeType;
 typedef unsigned int IntIDType;
 typedef int ReturnType;
 typedef std::string StringType;
+typedef void VoidType;
 
 typedef enum
 {
@@ -22,6 +23,14 @@ typedef enum
 	MARKETPRICEORDER=2,
 	CANCEL=3
 } InstructionType;
+
+typedef enum
+{
+	UNKNOWNRECORD=0,
+	TRADING=1,
+	POSITION=2,
+	FUND=3
+} RecordType;
 
 typedef enum
 {

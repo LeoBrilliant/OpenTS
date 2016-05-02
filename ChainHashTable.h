@@ -222,12 +222,12 @@ int ChainHashTable<Key,Value>::chtbl_insert(Key data)
 template<typename Key, typename Value>
 int ChainHashTable<Key,Value>::chtbl_remove(Key data)
 {
-	Key element, prev;
+	//Key element, prev;
 	int  bucket;
 
 	bucket = this->hashfunc(data) % this->buckets;
 
-	for(typename List<Key>::LstIter element = this->table[bucket].Begin(); element != this->table[bucket].Begin(); element++)
+	for(typename List<Key>::LstCstIter element = this->table[bucket].Begin(); element != this->table[bucket].Begin(); element++)
 	{
 		if(this->match(data, *element))
 		{

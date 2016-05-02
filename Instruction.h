@@ -32,14 +32,14 @@ private:
 	RightTimePoint ConfirmedTime;
 	RightTimePoint UpdateTime;
 
-	static unsigned int InstructionCounter;
+	static IntIDType InstructionCounter;
 
 public:
 	static int GetInstructionCounter();
 	static int IncInstructionCounter();
 
-	IntIDType GetClientId() const;
-	void SetClientId(IntIDType cliendId);
+	IntIDType GetClientID() const;
+	void SetClientID(IntIDType cliendID);
 
 	const RightTimePoint& GetConfirmedTime() const;
 	void SetConfirmedTime(RightTimePoint& confirmedTime);
@@ -49,9 +49,9 @@ public:
 	void SetInsertTime(RightTimePoint& insertTime);
 	void SetInsertTime();
 
-	int GetInstructionId() const;
-	void SetInstructionId(int instructionId = InstructionCounter);
-	//void SetInstructionId();
+	int GetInstructionID() const;
+	void SetInstructionID(int instructionID = InstructionCounter);
+	//void SetInstructionID();
 
 	const RightTimePoint& GetUpdateTime() const;
 	void SetUpdateTime(RightTimePoint& updateTime);

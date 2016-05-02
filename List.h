@@ -63,7 +63,7 @@ public:
 	LstIter Insert(LstIter position, const T& t) { return lt.insert(position, t); }
 	void Insert(LstIter position, size_t n, const T& t) { lt.insert(position, n, t); }
 	void Insert(LstIter position, LstIter first, LstIter last) { lt.insert(position, first, last); }
-	LstIter Erase(LstIter position) { return lt.erase(position); }
+	LstIter Erase(LstCstIter position) { return lt.erase(position); }
 	LstIter Erase(LstIter first, LstIter last) { return lt.erase(first, last); }
 	void Swap(List<T>& t) { lt.swap(t.GetLt()); }
 	void Resize(size_t n) { lt.resize(n); }

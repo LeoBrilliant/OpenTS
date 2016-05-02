@@ -7,7 +7,7 @@
 
 #include "Instruction.h"
 
-unsigned int Instruction::InstructionCounter = Constants::STARTOFINTID;
+IntIDType Instruction::InstructionCounter = Constants::STARTOFINTID;
 
 Instruction::Instruction() : InstructionID(Constants::INVALIDINSTRUMENTID),
 		ClientID(Constants::INVALIDINTID),
@@ -34,12 +34,12 @@ int Instruction::IncInstructionCounter() {
 }
 
 
-IntIDType Instruction::GetClientId() const {
+IntIDType Instruction::GetClientID() const {
 	return ClientID;
 }
 
-void Instruction::SetClientId(IntIDType clientId) {
-	ClientID = clientId;
+void Instruction::SetClientID(IntIDType clientID) {
+	ClientID = clientID;
 }
 
 const RightTimePoint& Instruction::GetConfirmedTime() const {
@@ -59,12 +59,12 @@ void Instruction::SetInsertTime(RightTimePoint& insertTime) {
 }
 
 
-int Instruction::GetInstructionId() const {
+int Instruction::GetInstructionID() const {
 	return InstructionID;
 }
 
-void Instruction::SetInstructionId(int instructionId) {
-	InstructionID = instructionId;
+void Instruction::SetInstructionID(int instructionID) {
+	InstructionID = instructionID;
 }
 
 const RightTimePoint& Instruction::GetUpdateTime() const {
@@ -79,7 +79,7 @@ void Instruction::SetInsertTime() {
 	this->InsertTime = RightTimePoint::Now();
 }
 
-//void Instruction::SetInstructionId() {
+//void Instruction::SetInstructionID() {
 //	this->InstructionID = IncInstructionCounter();
 //}
 

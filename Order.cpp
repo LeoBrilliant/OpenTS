@@ -39,7 +39,7 @@ Order::Order(IntIDType clientID,
 			OrderStatus(OrderStatusType::INIT)
 {
 	//OrderID = Instruction::GetInstructionID();
-	OrderID = this->GetInstructionId();
+	OrderID = this->GetInstructionID();
 }
 
 Order::~Order() {
@@ -61,20 +61,20 @@ void Order::SetDirection(DirectionType direction) {
 	Direction = direction;
 }
 
-const string& Order::GetInstrumentId() const {
+const string& Order::GetInstrumentID() const {
 	return InstrumentID;
 }
 
-void Order::SetInstrumentId(string& instrumentId) {
-	InstrumentID = instrumentId;
+void Order::SetInstrumentID(string& instrumentID) {
+	InstrumentID = instrumentID;
 }
 
-IntIDType Order::GetLocalOrderId() const {
+IntIDType Order::GetLocalOrderID() const {
 	return LocalOrderID;
 }
 
-void Order::SetLocalOrderId(IntIDType localOrderId) {
-	LocalOrderID = localOrderId;
+void Order::SetLocalOrderID(IntIDType localOrderID) {
+	LocalOrderID = localOrderID;
 }
 
 OffsetType Order::GetOffsetFlag() const {
@@ -85,12 +85,12 @@ void Order::SetOffsetFlag(OffsetType offsetFlag) {
 	OffsetFlag = offsetFlag;
 }
 
-IntIDType Order::GetOrderId() const {
+IntIDType Order::GetOrderID() const {
 	return OrderID;
 }
 
-void Order::SetOrderId(IntIDType orderId) {
-	OrderID = orderId;
+void Order::SetOrderID(IntIDType orderID) {
+	OrderID = orderID;
 }
 
 PriceType Order::GetOrderPrice() const {
