@@ -19,6 +19,14 @@ class Instrument
 {
 public:
 	Instrument();
+	Instrument(StringType name,
+		StringType code,
+		StringType underlying,
+		VolumeType multiplier,
+		VolumeType quotationUnit,
+		PriceType tick,
+		StringType month
+	);
 	~Instrument();
 private:
 	//ºÏÔ¼Ãû³Æ

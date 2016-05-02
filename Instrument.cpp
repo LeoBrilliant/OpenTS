@@ -17,5 +17,17 @@ Instrument::Instrument(): Name(InvalidString),
 {
 }
 
+Instrument::Instrument(StringType name, StringType code, StringType underlying,
+		VolumeType multiplier, VolumeType quotationUnit, PriceType tick,
+		StringType month): Name(name),
+				Code(code),
+				Underlying(underlying),
+				Multiplier(multiplier),
+				QuotationUnit(quotationUnit),
+				Tick(tick),
+				Month(month)
+{
+}
+
 Instrument::~Instrument() {
 }

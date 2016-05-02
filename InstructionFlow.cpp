@@ -17,20 +17,20 @@ InstructionFlow::InstructionFlow() :
 InstructionFlow::~InstructionFlow() {
 }
 
-bool InstructionFlow::InsertInstruction(Instruction& inst) {
+ReturnType InstructionFlow::InsertInstruction(Instruction& inst) {
 	instFlow.Push(inst);
 	this->SetInsertTime(inst);
 	return Constants::SUCCESS;
 }
 
-inline void InstructionFlow::SetInsertTime(Instruction& inst) {
+inline VoidType InstructionFlow::SetInsertTime(Instruction& inst) {
 	inst.SetInsertTime();
 }
 
-inline bool InstructionFlow::ValidateInstruction(Instruction& inst) {
+inline ReturnType InstructionFlow::ValidateInstruction(Instruction& inst) {
 	return Constants::SUCCESS;
 }
 
-inline void InstructionFlow::SetConfirmedTime(Instruction& inst) {
+inline VoidType InstructionFlow::SetConfirmedTime(Instruction& inst) {
 	inst.SetConfirmedTime();
 }

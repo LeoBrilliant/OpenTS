@@ -13,7 +13,9 @@
 #include "ChainHashTableTest.h"
 #include "RightTimePointUnitTest.h"
 #include "OrderChainHashTableTest.h"
+#include "InfrastructureTest.h"
 
+void InfrastructureUT();
 void TimePointUT();
 void ChainHashTableUT();
 void ListUT();

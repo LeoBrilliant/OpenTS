@@ -11,7 +11,9 @@ void UnitTestEntrance()
 {
 	ProgramMessage::Debug(__FUNCTION__);
 
-	OrderChainHashTableUT();
+	InfrastructureUT();
+
+	//OrderChainHashTableUT();
 
 	//TimePointUT();
 
@@ -43,4 +45,10 @@ void ListUT()
 void OrderChainHashTableUT() {
 	OrderChainHashTableTest ot;
 	ot.TestSuite();
+}
+
+void InfrastructureUT()
+{
+	InfrastructureTest it;
+	it.TestSuite();
 }
