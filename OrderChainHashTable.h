@@ -30,7 +30,7 @@ public:
 
 	DirectionType GetDirection();
 
-private:
+//private:
 	DirectionType Direction;
 	PriceType Tick;
 	PriceType UpperPriceBound;

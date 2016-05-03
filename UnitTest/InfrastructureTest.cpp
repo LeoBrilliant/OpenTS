@@ -27,6 +27,7 @@ void InfrastructureTest::ConstructorTest()
 	{
 		ProgramMessage::Debug<int>(IncCaseCount());
 		Infrastructure ocht1;
+		//Instrument Data
 		StringType name = "TestInstrument";
 		StringType code = "Instrument-01";
 		StringType underlying = "IF";
@@ -34,15 +35,36 @@ void InfrastructureTest::ConstructorTest()
 		VolumeType quotationUnit = 1;
 		PriceType tick = 1.0;
 		StringType month = "1606";
+		//Client Data
+		StringType name1 = "Brilliant", name2 = "Leo";
+		IntIDType clientID1 = 1, clientID2 = 2;
+		//OrderBook Data
+		PriceType lastPrice = 100.00;
+		AuctionType auction = AuctionType::CONTINUOUSAUCTION;
+
 		ProgramMessage::Debug(typeid(ocht1).name());
 		assert( typeid(ocht1) == typeid(Infrastructure));
 		ocht1.InitializeInfrastructure();
 		assert(ocht1.InstrumentList.Size() == 1);
 		assert(ocht1.InstrumentList[name] != NULL);
-/*		assert(ocht1.GetBuckets() == 0);
-		assert(ocht1.GetTable() == NULL);
-		assert(ocht1.GetDirection() == DirectionType::UNKNOWNDIRECTION);
-		ocht1.GetDetail("Hello");*/
+		assert(ocht1.InstrumentList[name]->GetName().compare(name) == 0);
+		assert(ocht1.InstrumentList[name]->GetMultiplier() == multiplier);
+		assert(ocht1.InstrumentList[name]->GetQuotationUnit() == quotationUnit);
+		assert(ocht1.InstrumentList[name]->GetTick() == tick);
+		assert(ocht1.ClientList.Size() == 2);
+		assert(ocht1.ClientList[clientID1].compare(name1) == 0);
+		assert(ocht1.ClientList[clientID2].compare(name2) == 0);
+		assert(ocht1.OrderBooks.Size() == 1);
+		assert(ocht1.OrderBooks[name]->GetLastPrice() == lastPrice);
+		assert(ocht1.OrderBooks[name]->GetAuction() == auction);
+		assert(ocht1.OrderBooks[name]->AskOrderHashQueue.Direction == DirectionType::SELL);
+		assert(ocht1.OrderBooks[name]->AskOrderHashQueue.Tick == tick);
+		assert(ocht1.OrderBooks[name]->AskOrderHashQueue.UpperPriceBound == lastPrice);
+		assert(ocht1.OrderBooks[name]->AskOrderHashQueue.LowerPriceBound == lastPrice);
+		assert(ocht1.OrderBooks[name]->BidOrderHashQueue.Direction == DirectionType::BUY);
+		assert(ocht1.OrderBooks[name]->BidOrderHashQueue.Tick == tick);
+		assert(ocht1.OrderBooks[name]->BidOrderHashQueue.UpperPriceBound == lastPrice);
+		assert(ocht1.OrderBooks[name]->BidOrderHashQueue.LowerPriceBound == lastPrice);
 		IncCasePassed();
 		ProgramMessage::Debug("Passed");
 	}

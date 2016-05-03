@@ -34,3 +34,10 @@ inline ReturnType InstructionFlow::ValidateInstruction(Instruction& inst) {
 inline VoidType InstructionFlow::SetConfirmedTime(Instruction& inst) {
 	inst.SetConfirmedTime();
 }
+
+ReturnType InstructionFlow::InsertInstructionHandlers(StringType instrument, InstrumentAction handler)
+{
+	pair<StringType, InstrumentAction> p = make_pair(instrument, handler);
+	this->InstructionHandlers.Insert(p);
+	return Constants::SUCCESS;
+}

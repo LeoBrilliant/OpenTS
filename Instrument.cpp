@@ -31,3 +31,31 @@ Instrument::Instrument(StringType name, StringType code, StringType underlying,
 
 Instrument::~Instrument() {
 }
+
+const StringType& Instrument::GetCode() const {
+	return Code;
+}
+
+const StringType& Instrument::GetMonth() const {
+	return Month;
+}
+
+VolumeType Instrument::GetMultiplier() const {
+	return Multiplier;
+}
+
+const StringType& Instrument::GetName() const {
+	return Name;
+}
+
+VolumeType Instrument::GetQuotationUnit() const {
+	return QuotationUnit;
+}
+
+PriceType Instrument::GetTick() const {
+	return Tick;
+}
+
+const StringType& Instrument::GetUnderlying() const {
+	return Underlying;
+}

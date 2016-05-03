@@ -15,6 +15,7 @@
 #include "InstructionFlow.h"
 #include "OrderBook.h"
 #include "Map.h"
+#include "Debug.h"
 
 class Infrastructure
 {
@@ -25,6 +26,7 @@ public:
 	//初始化基础数据结构
 	ReturnType InitializeInfrastructure();
 
+PRIVATE:
 //private:
 public:
 	//初始化合约列表

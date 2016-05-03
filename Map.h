@@ -15,6 +15,7 @@ using namespace std;
 template <typename Key, typename Value>
 class Map
 {
+public:
 typedef typename map<Key, Value>::iterator MapIter;
 typedef typename map<Key, Value>::reverse_iterator RMapIter;
 

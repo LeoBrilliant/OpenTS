@@ -14,6 +14,14 @@ OrderBook::OrderBook() :
 	//InstrumentInfo()
 {
 }
+OrderBook::OrderBook(Instrument * inst, PriceType lastPrice, AuctionType auction) :
+	IntrumentInfo(inst),
+	LastPrice(lastPrice),
+	Auction(auction),
+	BidOrderHashQueue(DirectionType::BUY, inst->GetTick(), lastPrice, lastPrice),
+	AskOrderHashQueue(DirectionType::SELL, inst->GetTick(), lastPrice, lastPrice)
+{
+}
 
 OrderBook::~OrderBook() {
 }
@@ -215,7 +223,7 @@ VolumeType OrderBook::GetTradingVolume(Order* buy, Order* sell) {
 	return tradingVolume;
 }
 
-inline PriceType OrderBook::GetLastPrice() {
+PriceType OrderBook::GetLastPrice() {
 	return this->LastPrice;
 }
 
@@ -311,4 +319,12 @@ Order* OrderBook::GetOrderByID(IntIDType id) {
 		}
 	}
 	return op;
+}
+
+AuctionType OrderBook::GetAuction() const {
+	return Auction;
+}
+
+void OrderBook::SetAuction(AuctionType auction) {
+	Auction = auction;
 }

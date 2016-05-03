@@ -53,6 +53,8 @@ public:
 	//业务处理
 	//bool BusinessHandler(Instruction & inst);
 
+	ReturnType InsertInstructionHandlers(StringType instrument, InstrumentAction handler);
+
 private:
 	//这里如果用指针队列效果会更好
 	Queue<Instruction> instFlow;

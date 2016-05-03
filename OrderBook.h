@@ -24,11 +24,29 @@ class OrderBook
 public:
 	OrderBook();
 
+	OrderBook(Instrument * ip, PriceType lastPrice, AuctionType auction);
+
 	~OrderBook();
 
-private:
+	//获取最优一档订单
+	Order * GetBestPriceOrder(DirectionType direction);
+
+	//获取最新价
+	inline PriceType GetLastPrice();
+
+	//处理用户指令
+	ReturnType OrderAction(Instruction * inst);
+
+//private:
 	//合约信息
 	Instrument * IntrumentInfo;
+
+	//最新价
+	PriceType LastPrice;
+
+	//竞价类型
+	AuctionType Auction;
+
 	//订单档位哈希队列
 	OrderChainHashTable BidOrderHashQueue;
 	OrderChainHashTable AskOrderHashQueue;
@@ -41,22 +59,6 @@ private:
 	//成交流
 	List<TradingRecord*> TradingFlow;
 
-	//最新价
-	PriceType LastPrice;
-
-	//竞价类型
-	AuctionType Auction;
-
-public:
-	//获取最优一档订单
-	Order * GetBestPriceOrder(DirectionType direction);
-
-	//获取最新价
-	inline PriceType GetLastPrice();
-
-	//处理用户指令
-	ReturnType OrderAction(Instruction * inst);
-private:
 	//插入订单队列
 	ReturnType InsertIntoOrderFlow(Order * o);
 	//获取对手方
@@ -85,6 +87,8 @@ private:
 	Order* GetOrderByID(IntIDType id);
 	//ToDo 记录委托流
 	//ToDo 记录成交流
+	AuctionType GetAuction() const;
+	void SetAuction(AuctionType auction);
 };
 
 

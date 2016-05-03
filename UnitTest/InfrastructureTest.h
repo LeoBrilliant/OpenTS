@@ -10,7 +10,9 @@
 
 
 #include "../Infrasctructure.h"
+#include "../Debug.h"
 #include "UTBase.h"
+#include <string>
 
 class InfrastructureTest : public UTBase<IntIDType>
 {

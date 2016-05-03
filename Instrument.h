@@ -28,6 +28,14 @@ public:
 		StringType month
 	);
 	~Instrument();
+	const StringType& GetCode() const;
+	const StringType& GetMonth() const;
+	VolumeType GetMultiplier() const;
+	const StringType& GetName() const;
+	VolumeType GetQuotationUnit() const;
+	PriceType GetTick() const;
+	const StringType& GetUnderlying() const;
+
 private:
 	//ºÏÔ¼Ãû³Æ
 	StringType Name;
