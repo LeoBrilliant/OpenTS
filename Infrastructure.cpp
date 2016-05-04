@@ -14,7 +14,7 @@ Infrastructure::Infrastructure() {
 Infrastructure::~Infrastructure() {
 }
 
-ReturnType Infrastructure::InitializeInfrastructure() {
+ReturnType Infrastructure::InitializeInfrastructureAction() {
 	ReturnType ret = Constants::FAILURE;
 	ret = this->InitializeInstruments();
 	ret = this->InitializeClients();
@@ -80,6 +80,11 @@ ReturnType Infrastructure::InitializeOrderBooks() {
 }
 
 ReturnType Infrastructure::InitializeInstructionFlow() {
+	return Constants::SUCCESS;
+}
+
+ReturnType Infrastructure::AcceptInstruction(Instruction& inst) {
+	this->InstFlow.InsertAction(inst);
 	return Constants::SUCCESS;
 }
 

@@ -24,11 +24,12 @@ public:
 	~Infrastructure();
 
 	//初始化基础数据结构
-	ReturnType InitializeInfrastructure();
+	ReturnType InitializeInfrastructureAction();
 
-PRIVATE:
+	//接收指令
+	ReturnType AcceptInstruction(Instruction & inst);
+
 //private:
-public:
 	//初始化合约列表
 	ReturnType InitializeInstruments();
 	//初始化客户列表

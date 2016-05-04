@@ -41,3 +41,31 @@ ReturnType InstructionFlow::InsertInstructionHandlers(StringType instrument, Ins
 	this->InstructionHandlers.Insert(p);
 	return Constants::SUCCESS;
 }
+
+ReturnType InstructionFlow::InsertAction(Instruction &inst)
+{
+	this->InsertInstruction(inst);
+
+	this->DispatchInstruction(inst);
+	return Constants::SUCCESS;
+}
+ReturnType InstructionFlow::DispatchInstruction(Instruction &inst)
+{
+	ReturnType ret = Constants::FAILURE;
+	Order * op = NULL;
+	switch(inst.GetInstType())
+	{
+	case InstructionType::LIMITPRICEORDER:
+
+	case InstructionType::CANCEL:
+
+	case InstructionType::MARKETPRICEORDER:
+		op = (Order *)(&inst);
+		ret = this->InstructionHandlers[op->GetInstrumentID()](op);
+
+		break;
+	default:
+		break;
+	}
+	return ret;
+}

@@ -11,7 +11,9 @@ void UnitTestEntrance()
 {
 	ProgramMessage::Debug(__FUNCTION__);
 
-	InfrastructureUT();
+	ControlCenterUT();
+
+	//InfrastructureUT();
 
 	//OrderChainHashTableUT();
 
@@ -50,5 +52,11 @@ void OrderChainHashTableUT() {
 void InfrastructureUT()
 {
 	InfrastructureTest it;
+	it.TestSuite();
+}
+
+void ControlCenterUT()
+{
+	ControlCenterTest it;
 	it.TestSuite();
 }

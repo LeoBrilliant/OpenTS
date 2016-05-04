@@ -33,7 +33,10 @@ typedef enum
 
 	//Execution Result
 	SUCCESS = 0,
-	FAILURE = -1
+	FAILURE = -1,
+
+	//Length
+	ZERO = 0
 } Constants;
 
 const char InvalidString[] = "INVALIDSTRING";

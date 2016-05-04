@@ -34,7 +34,7 @@ private:
 	//客户ID
 	//string ClientID;
 	//合约号
-	string InstrumentID;
+	StringType InstrumentID;
 	//指令类型
 	//string OrderType;
 	//方向

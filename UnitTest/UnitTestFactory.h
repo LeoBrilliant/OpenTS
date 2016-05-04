@@ -14,6 +14,9 @@
 #include "RightTimePointUnitTest.h"
 #include "OrderChainHashTableTest.h"
 #include "InfrastructureTest.h"
+#include "ControlCenterTest.h"
+
+void ControlCenterUT();
 
 void InfrastructureUT();
 void TimePointUT();

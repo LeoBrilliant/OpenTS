@@ -44,7 +44,7 @@ void InfrastructureTest::ConstructorTest()
 
 		ProgramMessage::Debug(typeid(ocht1).name());
 		assert( typeid(ocht1) == typeid(Infrastructure));
-		ocht1.InitializeInfrastructure();
+		ocht1.InitializeInfrastructureAction();
 		assert(ocht1.InstrumentList.Size() == 1);
 		assert(ocht1.InstrumentList[name] != NULL);
 		assert(ocht1.InstrumentList[name]->GetName().compare(name) == 0);

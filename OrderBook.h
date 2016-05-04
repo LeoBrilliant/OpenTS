@@ -32,7 +32,7 @@ public:
 	Order * GetBestPriceOrder(DirectionType direction);
 
 	//获取最新价
-	inline PriceType GetLastPrice();
+	PriceType GetLastPrice();
 
 	//处理用户指令
 	ReturnType OrderAction(Instruction * inst);

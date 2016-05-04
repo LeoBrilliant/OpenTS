@@ -9,6 +9,7 @@
 #define INSTRUCTIONFLOW_H_
 
 #include "Instruction.h"
+#include "Order.h"
 #include "Queue.h"
 #include "Map.h"
 
@@ -53,7 +54,13 @@ public:
 	//业务处理
 	//bool BusinessHandler(Instruction & inst);
 
+	//更新指令处理方法
 	ReturnType InsertInstructionHandlers(StringType instrument, InstrumentAction handler);
+
+	//插入动作处理
+	ReturnType InsertAction(Instruction &inst);
+	//分发指令
+	ReturnType DispatchInstruction(Instruction &inst);
 
 private:
 	//这里如果用指针队列效果会更好
