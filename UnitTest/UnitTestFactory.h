@@ -15,7 +15,9 @@
 #include "OrderChainHashTableTest.h"
 #include "InfrastructureTest.h"
 #include "ControlCenterTest.h"
+#include "SerializationTest.h"
 
+void SerializationUT();
 void ControlCenterUT();
 
 void InfrastructureUT();

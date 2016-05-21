@@ -21,7 +21,8 @@ class Instruction
 {
 public:
 	Instruction();
-	Instruction(IntIDType clientID, InstructionType instType, int instID = IncInstructionCounter());
+	Instruction(IntIDType clientID, InstructionType instType,
+			int instID = IncInstructionCounter());
 	~Instruction();
 
 private:

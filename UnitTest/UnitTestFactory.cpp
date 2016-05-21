@@ -11,7 +11,9 @@ void UnitTestEntrance()
 {
 	ProgramMessage::Debug(__FUNCTION__);
 
-	ControlCenterUT();
+	SerializationUT();
+
+	//ControlCenterUT();
 
 	//InfrastructureUT();
 
@@ -59,4 +61,10 @@ void ControlCenterUT()
 {
 	ControlCenterTest it;
 	it.TestSuite();
+}
+
+void SerializationUT()
+{
+	SerializationTest st;
+	st.TestSuite();
 }
