@@ -10,11 +10,11 @@
 
 #include "Types.h"
 #include "Constants.h"
+#include "Infrastructure.h"
 
 #include "Instrument.h"
 #include "InstructionFlow.h"
 #include "OrderBook.h"
-#include "Infrasctructure.h"
 
 class ControlCenter
 {

@@ -9,7 +9,8 @@
 #define UNITTEST_INFRASTRUCTURETEST_H_
 
 
-#include "../Infrasctructure.h"
+#include "../Infrastructure.h"
+
 #include "../Debug.h"
 #include "UTBase.h"
 #include <string>

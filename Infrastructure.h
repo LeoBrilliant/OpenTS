@@ -5,8 +5,8 @@
  *      Author: LeoBrilliant
  */
 
-#ifndef INFRASCTRUCTURE_H_
-#define INFRASCTRUCTURE_H_
+#ifndef INFRASTRUCTURE_H_
+#define INFRASTRUCTURE_H_
 
 #include "Types.h"
 #include "Constants.h"
@@ -61,4 +61,4 @@ public:
 	InstructionFlow InstFlow;
 };
 
-#endif /* INFRASCTRUCTURE_H_ */
+#endif /* INFRASTRUCTURE_H_ */
