@@ -22,7 +22,7 @@ public:
 	Order();
 	Order(IntIDType clientID,
 			InstructionType instType,
-			string & instID,
+			string instID,
 			DirectionType direction,
 			OffsetType offset,
 			PriceType price,

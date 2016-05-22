@@ -35,7 +35,6 @@ void SerializationTest::ConstructorTest() {
 		StringType month = "1606";
 		//Client Data
 		StringType name1 = "Brilliant", name2 = "Leo";
-		IntIDType clientID1 = 1, clientID2 = 2;
 		//OrderBook Data
 		PriceType lastPrice = 100.00;
 		AuctionType auction = AuctionType::CONTINUOUSAUCTION;
@@ -86,5 +85,22 @@ void SerializationTest::ConstructorTest() {
 		IncCasePassed();
 		ProgramMessage::Debug("Passed");
 
+		ProgramMessage::Debug<int>(IncCaseCount());
+		Order * op = GenOrder();
+		assert(op != NULL);
+		StringType strOrder = SerializeOrder(op);
+		ProgramMessage::Debug(strOrder);
+
+		delete ip;
+		Order * op2 = NULL;
+		op2 = DeserializeOrder(strOrder);
+		assert(op2 != NULL);
+
+		StringType strOrder2 = SerializeOrder(op2);
+		ProgramMessage::Debug(strOrder2);
+		//assert(strOrder2.compare(strOrder) == 0);
+
+		IncCasePassed();
+		ProgramMessage::Debug("Passed");
 	}
 }

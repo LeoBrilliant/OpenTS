@@ -10,6 +10,7 @@
 
 #include <../Serialization.h>
 #include "UTBase.h"
+#include "TestDataFactory.h"
 
 class SerializationTest : public UTBase<IntIDType>
 {
