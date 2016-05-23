@@ -58,3 +58,19 @@ void RightTimePoint::SetTimePoint(const time_point<system_clock>& timePoint) {
 void RightTimePoint::SetTimePoint() {
 	this->TimePoint = Now();
 }
+
+void RightTimePoint::FromMicroSeconds(int microsecs) {
+	microseconds ms(microsecs);
+
+	duration<time_t, std::micro> milli_dura = ms;
+
+	time_point<system_clock> tmp(milli_dura);
+
+	this->TimePoint = tmp;
+}
+
+int RightTimePoint::GetMicroSeconds() {
+	duration<time_t, std::micro> milli_dura = duration_cast<microseconds>(this->TimePoint.time_since_epoch());
+
+	return milli_dura.count();
+}
