@@ -57,16 +57,25 @@ void DBAccessTest::ConstructorTest() {
 		conn_ptr = ConnectMySQLServer(conn_ptr);
 		assert(conn_ptr != NULL);
 
+		if (!mysql_set_character_set(conn_ptr, "utf8"))
+		{
+		    printf("New client character set: %s\n",
+		           mysql_character_set_name(conn_ptr));
+		}
+
 		Order * op = GenOrder();
 
 		char * sql = GetInsertOrderSQL(op);
 
+		//int i = strlen(sql);
+
 		//sql = "select * from t_test";
 
 		//sql = "insert into t_order(clientid) values (1)";
-		sql = "Insert into t_order (ClientID, InstructionType, InstrumentID, Direction, OffsetFlag, OrderPrice, "
-				"Volume, OrderID, LocalOrderID, VolumeLeft,  OrderStatus) Values (10000001, 1, 'TestInstrument', '1', '1', 101.340000, 32, 1, 1, 32, '1' )";
+		//sql = "Insert into t_order (ClientID, InstructionType, InstrumentID, Direction, OffsetFlag, OrderPrice, Volume, OrderID, LocalOrderID, VolumeLeft,  OrderStatus) Values (10000001, 1, 'TestInstrument', '1', '1', 101.340000, 32, 1, 1, 32, '1' )";
 /*		sql = "Insert into t_order (ClientID, InstructionType, InstrumentID, Direction, OffsetFlag, OrderPrice, "
+				"Volume, OrderID, LocalOrderID, VolumeLeft,  OrderStatus) Values (10000001, 1, 'TestInstrument', '1', '1', 101.340000, 32, 1, 1, 32, '1' )";
+		sql = "Insert into t_order (ClientID, InstructionType, InstrumentID, Direction, OffsetFlag, OrderPrice, "
 				"Volume, OrderID, LocalOrderID, VolumeLeft,  OrderStatus"
 				") "
 				"Values "
@@ -91,6 +100,9 @@ void DBAccessTest::ConstructorTest() {
 
 		//mysql_free_result(res);
 		mysql_close(conn_ptr);
+
+		delete op;
+		delete sql;
 
 		IncCasePassed();
 		ProgramMessage::Debug("Passed");

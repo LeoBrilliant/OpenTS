@@ -37,14 +37,15 @@ char * GetInsertOrderSQL(Order * op)
 	return sql.c_str();*/
 
 
-	char sql[2048];
-	sprintf(sql, "Insert into t_order "
-			"(ClientID, InstructionType, InstrumentID, Direction, OffsetFlag, OrderPrice, "
-			"Volume, OrderID, LocalOrderID, VolumeLeft,  OrderStatus) "
-			"Values ("
-			"%d, %d, '%s', '%d', '%d', "
-			"%f, %d, %d, %d, %d, "
-			"'%d' )",
+	char * sql = new char[2048];
+	memset(sql, 0, 2048);
+	sprintf(sql, "insert into t_order"
+			"(ClientID, InstructionType, InstrumentID, Direction, OffsetFlag, OrderPrice,"
+			"Volume, OrderID, LocalOrderID, VolumeLeft, OrderStatus)"
+			"Values("
+			"%d, %d,\'%s\', \'%d\', \'%d\',"
+			"%.3f, %d, %d, %d, %d,"
+			"\'%d\')",
 			(int)(op->GetClientID()),
 			(int)(op->GetInstType()),
 			(op->GetInstrumentID().c_str()),
@@ -57,6 +58,43 @@ char * GetInsertOrderSQL(Order * op)
 			op->GetVolumeLeft(),
 			(int)op->GetOrderStatus()
 	);
+/*
+	sprintf(sql, "INSERT INTO t_order("
+			"ClientID"
+			//", InstructionType, "
+			//"Direction, "
+			//"OffsetFlag, "
+			//"OrderPrice, "
+			//"Volume, "
+			//"OrderID, "
+			//"LocalOrderID, "
+			//"OrderTimePoint, "
+			//"VolumeLeft, "
+			//"CancelTimePoint, "
+			//"OrderStatus"
+			") VALUES ("
+			"1"
+			//", %d, \'%d\', \'%d\',"
+			//"%.3f, %d, %d, %d, %d,"
+			//"\'%d\') ;",
+			")"
+			//1
+			//(op->GetClientID())
+			//(int)(op->GetInstType()),
+			//(op->GetInstrumentID().c_str()),
+			//(int)op->GetDirection(),
+			//(int)op->GetOffsetFlag(),
+			//op->GetOrderPrice(),
+			//op->GetVolume(),
+			//op->GetOrderID(),
+			//op->GetLocalOrderID(),
+			//op->GetVolumeLeft(),
+			//(int)op->GetOrderStatus()
+	);*/
+
+//	sprintf(sql, "insert into t_order(clientid) values (1)");
+//	strcpy(sql, "insert into t_order(clientid) values (1)");
+//	int q = strcmp(sql, "Insert into t_order(ClientID, InstructionType, InstrumentID, Direction, OffsetFlag, OrderPrice,Volume, OrderID, LocalOrderID, VolumeLeft, OrderStatus)Values(10000001, 1,'TestInstrument', '1', '1',101.340000, 32, 1, 1, 32,'1')");
 
 	return sql;
 
