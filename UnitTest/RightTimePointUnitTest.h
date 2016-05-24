@@ -12,6 +12,7 @@
 
 #include "../ProgramMessage.h"
 #include <cstdlib>
+#include <limits>
 #include "UTBase.h"
 
 class TimePointUnitTest
@@ -35,6 +36,10 @@ public:
 
 	//Now Test
 	void NowTest();
+
+	void GetMicroSecondsTest();
+
+	void FromMicroSecondsTest();
 
 	static unsigned int GetCaseCount(){ return caseCount; }
 	static unsigned int IncCaseCount(){ return ++caseCount; }

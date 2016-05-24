@@ -20,7 +20,7 @@ void UnitTestEntrance()
 
 	//OrderChainHashTableUT();
 
-	//TimePointUT();
+	TimePointUT();
 
 	//ChainHashTableUT();
 
