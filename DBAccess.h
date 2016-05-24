@@ -18,5 +18,7 @@ using namespace std;
 
 char * GetInsertOrderSQL(Order * op);
 
+char * GetUpdateOrderSQL(Order * op);
+
 
 #endif /* DBACCESS_H_ */

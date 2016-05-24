@@ -100,3 +100,34 @@ char * GetInsertOrderSQL(Order * op)
 
 }
 
+char * GetUpdateOrderSQL(Order * op)
+{
+	char * sql = new char[2048];
+	memset(sql, 0, 2048);
+	//UPDATE t_order SET ClientID=[value-1],InstructionType=[value-2],InstrumentID=[value-3],Direction=[value-4],
+	//OffsetFlag=[value-5],OrderPrice=[value-6],Volume=[value-7],OrderID=[value-8],LocalOrderID=[value-9],
+	//OrderTimePoint=[value-10],VolumeLeft=[value-11],CancelTimePoint=[value-12],OrderStatus=[value-13] WHERE 1
+	sprintf(sql, "UPDATE t_order "
+			"SET "
+			//"ClientID=[value-1],"
+			//"InstructionType=[value-2],"
+			//"InstrumentID=[value-3],"
+			//"Direction=[value-4],"
+			//"OffsetFlag=[value-5],"
+			//"OrderPrice=[value-6],"
+			//"Volume=[value-7],"
+			//"OrderID=[value-8],"
+			//"LocalOrderID=[value-9],"
+			//"OrderTimePoint=[value-10],"
+			"VolumeLeft=%d," //"[value-11],"
+			//"CancelTimePoint=[value-12],"
+			"OrderStatus=%d " // "[value-13] "
+			"WHERE OrderID=%d"
+			,
+			op->GetVolumeLeft(),
+			(int)op->GetOrderStatus(),
+			op->GetOrderID()
+	);
+
+	return sql;
+}

@@ -86,9 +86,13 @@ void DBAccessTest::ConstructorTest() {
 
 		ProgramMessage::Debug(sql);
 
+		if(mysql_query(conn_ptr, "delete from t_order"))
+		{
+			fprintf(stderr, "call mysql_query failed...%d: %s", mysql_errno(conn_ptr), mysql_error(conn_ptr));
+		}
 		if(mysql_query(conn_ptr, sql))
 		{
-			fprintf(stderr, "call mysql_query failed...%d: %s", errno, mysql_error(conn_ptr));
+			fprintf(stderr, "call mysql_query failed...%d: %s", mysql_errno(conn_ptr), mysql_error(conn_ptr));
 		}
 
 		//res = mysql_use_result(conn_ptr);
@@ -106,7 +110,46 @@ void DBAccessTest::ConstructorTest() {
 
 		IncCasePassed();
 		ProgramMessage::Debug("Passed");
+	}
+	{
+		ProgramMessage::Debug<int>(IncCaseCount());
+		MYSQL * conn_ptr = NULL;
+		conn_ptr = NULL;
+		conn_ptr = InitializeMySQLClient(conn_ptr);
+		assert(conn_ptr != NULL);
+		conn_ptr = ConnectMySQLServer(conn_ptr);
+		assert(conn_ptr != NULL);
 
+		if (!mysql_set_character_set(conn_ptr, "utf8"))
+		{
+		    printf("New client character set: %s\n",
+		           mysql_character_set_name(conn_ptr));
+		}
+
+		Order * op = GenOrder();
+
+		char * sql_insert = GetInsertOrderSQL(op);
+		op->SetVolumeLeft(op->GetVolumeLeft() + 10);
+		char * sql_update = GetUpdateOrderSQL(op);
+		ProgramMessage::Debug(sql_insert);
+		ProgramMessage::Debug(sql_update);
+		if(mysql_query(conn_ptr, sql_insert))
+		{
+			fprintf(stderr, "call mysql_query failed...%d: %s", errno, mysql_error(conn_ptr));
+		}
+		if(mysql_query(conn_ptr, sql_update))
+		{
+			fprintf(stderr, "call mysql_query failed...%d: %s", errno, mysql_error(conn_ptr));
+		}
+
+		mysql_close(conn_ptr);
+
+		delete op;
+		delete sql_insert;
+		delete sql_update;
+
+		IncCasePassed();
+		ProgramMessage::Debug("Passed");
 	}
 }
 
