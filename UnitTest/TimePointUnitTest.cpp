@@ -107,6 +107,8 @@ void TimePointUnitTest::GetMicroSecondsTest() {
 	tp2.FromMicroSeconds(i);
 	ProgramMessage::Debug(tp2.GetCTime());
 
+	assert(strcmp(tp2.GetCTime(),tp.GetCTime()) == 0);
+
 	IncCasePassed();
 	ProgramMessage::Debug("Passed");
 }
