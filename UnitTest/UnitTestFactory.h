@@ -16,7 +16,9 @@
 #include "InfrastructureTest.h"
 #include "ControlCenterTest.h"
 #include "SerializationTest.h"
+#include "DBAccessTest.h"
 
+void DBAccessUT();
 void SerializationUT();
 void ControlCenterUT();
 

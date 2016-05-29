@@ -27,6 +27,7 @@ public:
 	static time_point<system_clock> Now();
 	time_t ToTimeT();
 	void FromTimeT(time_t * tp);
+	void FromMicroSeconds(long long microseconds);
 
 	char * GetCTime();
 	tm * GetLocalTime();
@@ -37,6 +38,8 @@ public:
 	const time_point<system_clock>& GetTimePoint() const;
 	void SetTimePoint(const time_point<system_clock>& timePoint);
 	void SetTimePoint();
+
+	long long GetMicroSeconds();
 };
 
 

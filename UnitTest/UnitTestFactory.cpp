@@ -11,7 +11,8 @@ void UnitTestEntrance()
 {
 	ProgramMessage::Debug(__FUNCTION__);
 
-	SerializationUT();
+	DBAccessUT();
+	//SerializationUT();
 
 	//ControlCenterUT();
 
@@ -19,7 +20,7 @@ void UnitTestEntrance()
 
 	//OrderChainHashTableUT();
 
-	//TimePointUT();
+	TimePointUT();
 
 	//ChainHashTableUT();
 
@@ -67,4 +68,10 @@ void SerializationUT()
 {
 	SerializationTest st;
 	st.TestSuite();
+}
+
+void DBAccessUT()
+{
+	DBAccessTest dt;
+	dt.TestSuite();
 }

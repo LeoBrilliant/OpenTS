@@ -41,6 +41,8 @@ void ControlCenter::CommandLoop() {
 			ip->AcceptInstruction(*inst);
 			//break;
 			}
+			else
+				break;
 		//default:
 			//break;
 		}
