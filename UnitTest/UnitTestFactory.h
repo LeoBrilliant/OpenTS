@@ -17,7 +17,9 @@
 #include "ControlCenterTest.h"
 #include "SerializationTest.h"
 #include "DBAccessTest.h"
+#include "FrontServerTest.h"
 
+void FrontServerUT();
 void DBAccessUT();
 void SerializationUT();
 void ControlCenterUT();

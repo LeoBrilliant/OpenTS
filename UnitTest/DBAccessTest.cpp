@@ -32,7 +32,7 @@ void DBAccessTest::ConstructorTest() {
 		conn_ptr = ConnectMySQLServer(conn_ptr);
 		assert(conn_ptr != NULL);
 
-		if(mysql_query(conn_ptr, "select * from t_test"))
+		if(mysql_query(conn_ptr, "select * from t_order"))
 		{
 			fprintf(stderr, "call mysql_query failed...%d: %s", errno, strerror(errno));
 		}

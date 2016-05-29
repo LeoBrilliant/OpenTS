@@ -5,8 +5,8 @@
  *      Author: LeoBrilliant
  */
 
-#ifndef INITSERVER_H_
-#define INITSERVER_H_
+#ifndef INITSERVER_CPP_
+#define INITSERVER_CPP_
 
 #include <errno.h>
 #include <sys/types.h>
@@ -47,4 +47,4 @@ errout:
 
 
 
-#endif /* INITSERVER_H_ */
+#endif /* INITSERVER_CPP_ */

@@ -11,7 +11,8 @@ void UnitTestEntrance()
 {
 	ProgramMessage::Debug(__FUNCTION__);
 
-	DBAccessUT();
+	FrontServerUT();
+	//DBAccessUT();
 	//SerializationUT();
 
 	//ControlCenterUT();
@@ -74,4 +75,10 @@ void DBAccessUT()
 {
 	DBAccessTest dt;
 	dt.TestSuite();
+}
+
+void FrontServerUT()
+{
+	FrontServerTest fst;
+	fst.TestSuite();
 }
