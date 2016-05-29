@@ -14,7 +14,7 @@ StringType SerializeInstruction(Instruction * inst)
 	AssembleInstructionValue(inst, jsonInst);
 	//FastWriter fast_writer;
 	StyledWriter fast_writer;
-	string strInst = fast_writer.write(jsonInst);
+	StringType strInst = fast_writer.write(jsonInst);
 	return strInst;
 }
 
@@ -59,7 +59,7 @@ StringType SerializeOrder(Order * o)
 	AssembleOrderValue(o, jsonOrder);
 	//FastWriter fast_writer;
 	StyledWriter fast_writer;
-	string strOrder = fast_writer.write(jsonOrder);
+	StringType strOrder = fast_writer.write(jsonOrder);
 
 	return strOrder;
 }
@@ -114,7 +114,7 @@ Order * DeserializeOrder(StringType strOrder)
 {
 	Reader reader;
 	Value jsonOrder;
-	reader.parse(strOrder, jsonOrder);
+	reader.parse(strOrder.c_str(), jsonOrder);
 /*	Order(IntIDType clientID,
 			InstructionType instType,
 			string & instID,
@@ -128,7 +128,7 @@ Order * DeserializeOrder(StringType strOrder)
 	Order * ip = new Order(
 			(IntIDType)(jsonInst["ClientID"].asInt()),
 			(InstructionType)(jsonInst["InstType"].asInt()),
-			(string)(jsonOrder["InstrumentID"].asString()),
+			(StringType)(jsonOrder["InstrumentID"].asString()),
 			(DirectionType)(jsonOrder["Direction"].asInt()),
 			(OffsetType)(jsonOrder["OffsetFlag"].asInt()),
 			(PriceType)(jsonOrder["OrderPrice"].asDouble()),
