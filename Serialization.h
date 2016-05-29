@@ -26,4 +26,6 @@ Value & AssembleOrderValue(Order * o, Value & jsonOrder);
 
 Order * DeserializeOrder(StringType strOrder);
 
+Order * DeserializeOrder(Value & jsonOrder);
+
 #endif /* SERIALIZATION_H_ */

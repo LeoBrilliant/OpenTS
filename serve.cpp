@@ -6,6 +6,8 @@
  */
 
 #include "FrontServer.h"
+#include "Serialization.h"
+#include "Infrastructure.h"
 
 using namespace std;
 
@@ -39,6 +41,9 @@ void serve(int sockfd)
 	{
 		pollfds[i].fd = -1;
 	}
+
+	static Infrastructure infra;
+	infra.InitializeInfrastructureAction();
 
 	while(true)
 	{
@@ -117,8 +122,23 @@ hungup:
 				else
 				{
 					//request(buf, nread, clifd, client[i].uid);
-					printf("%s\n", buf);
+					//printf("%s\n", buf);
 					fflush(stdout);
+					Json::Reader jsonReader;
+					Json::Value jsonValue;
+					bool parseResult = jsonReader.parse(buf, jsonValue);
+					if(parseResult)
+					{
+						Json::Value inst = jsonValue["Instruction"];
+						if(inst["InstType"].asInt() == InstructionType::LIMITPRICEORDER)
+						{
+							printf("LimitPriceOrderReceived\n");
+
+							Instruction * op = DeserializeOrder(jsonValue);
+
+							infra.AcceptInstruction(*op);
+						}
+					}
 				}
 			}
 		}

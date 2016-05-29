@@ -12,6 +12,7 @@
 #include "Order.h"
 #include "Queue.h"
 #include "Map.h"
+#include "OrderBook.h"
 
 //ReturnType TestFuncPointer(Instruction & inst)
 //{
@@ -55,7 +56,7 @@ public:
 	//bool BusinessHandler(Instruction & inst);
 
 	//更新指令处理方法
-	ReturnType InsertInstructionHandlers(StringType instrument, InstrumentAction handler);
+	ReturnType InsertInstructionHandlers(Map<StringType, OrderBook *> * handler);
 
 	//插入动作处理
 	ReturnType InsertAction(Instruction &inst);
@@ -69,8 +70,8 @@ private:
 	Queue<Instruction> instBuffer;
 
 	//指令事件处理集合
-	Map<StringType, InstrumentAction> InstructionHandlers;
-
+	//Map<StringType, InstrumentAction> InstructionHandlers;
+	Map<StringType, OrderBook *> * InstructionHandlers;
 	ReturnType (*BusinessHandler)(Instruction & inst);
 	ReturnType (*NotifyClient)(Instruction & inst);
 	ReturnType (*ResponseToClient)(Instruction & inst);

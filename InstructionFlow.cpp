@@ -8,6 +8,7 @@
 #include "InstructionFlow.h"
 
 InstructionFlow::InstructionFlow() :
+	InstructionHandlers(NULL),
 	BusinessHandler(DefaultHandler),
 	NotifyClient(DefaultHandler),
 	ResponseToClient(DefaultHandler)
@@ -35,10 +36,11 @@ inline VoidType InstructionFlow::SetConfirmedTime(Instruction& inst) {
 	inst.SetConfirmedTime();
 }
 
-ReturnType InstructionFlow::InsertInstructionHandlers(StringType instrument, InstrumentAction handler)
+ReturnType InstructionFlow::InsertInstructionHandlers(Map<StringType, OrderBook *> * handler)
 {
-	pair<StringType, InstrumentAction> p = make_pair(instrument, handler);
-	this->InstructionHandlers.Insert(p);
+//	pair<StringType, OrderBook> p = make_pair(instrument, handler);
+//	this->InstructionHandlers.Insert(p);
+	this->InstructionHandlers = handler;
 	return Constants::SUCCESS;
 }
 
@@ -53,6 +55,7 @@ ReturnType InstructionFlow::DispatchInstruction(Instruction &inst)
 {
 	ReturnType ret = Constants::FAILURE;
 	Order * op = NULL;
+	OrderBook * obp = NULL;
 	switch(inst.GetInstType())
 	{
 	case InstructionType::LIMITPRICEORDER:
@@ -61,7 +64,8 @@ ReturnType InstructionFlow::DispatchInstruction(Instruction &inst)
 
 	case InstructionType::MARKETPRICEORDER:
 		op = (Order *)(&inst);
-		ret = this->InstructionHandlers[op->GetInstrumentID()](op);
+		obp = (*(this->InstructionHandlers))[op->GetInstrumentID()];
+		ret = obp->OrderAction(op);
 
 		break;
 	default:

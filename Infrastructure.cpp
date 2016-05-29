@@ -94,7 +94,10 @@ ReturnType Infrastructure::RegisterInstructionAction() {
 			iter != this->OrderBooks.End(); ++ iter)
 	{
 		//pair<StringType, InstrumentAction> p = make_pair(iter->first, iter->second->OrderAction);
-		this->InstFlow.InsertInstructionHandlers(iter->first,InstrumentAction(&iter->second->OrderAction));
+		//this->InstFlow.InsertInstructionHandlers(iter->first,InstrumentAction(&iter->second->OrderAction));
+
 	}
+
+	this->InstFlow.InsertInstructionHandlers(&OrderBooks);
 	return Constants::SUCCESS;
 }

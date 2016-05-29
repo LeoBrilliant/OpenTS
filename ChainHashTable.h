@@ -52,17 +52,17 @@ private:
 
 	List<Key> * table;
 
-	int chtbl_init(int buckets, int (*h)(const Key key),
+	virtual int chtbl_init(int buckets, int (*h)(const Key key),
 			int (*match)(const Key key1, const Key key2),
 			void (*destroy)(Key data));
 
-	void chtbl_destroy();
+	virtual void chtbl_destroy();
 
-	int chtbl_insert(Key data);
+	virtual int chtbl_insert(Key data);
 
-	int chtbl_remove(Key data);
+	virtual int chtbl_remove(Key data);
 
-	int chtbl_lookup(Key data);
+	virtual int chtbl_lookup(Key data);
 
 public:
 	inline int Size() {return this->size;}
@@ -81,8 +81,8 @@ public:
 	virtual void GetDetail(const string& s);
 	virtual int GetBuckets() const;
 	virtual const List<Key>* GetTable() const;
-	void SetHashfunc(int (*hashfunc)(const Key key));
-	void SetMatch(int (*match)(Key key1, Key key2));
+	virtual void SetHashfunc(int (*hashfunc)(const Key key));
+	virtual void SetMatch(int (*match)(Key key1, Key key2));
 
 	void SetBuckets(int buckets) {
 		this->buckets = buckets;
@@ -155,8 +155,6 @@ int ChainHashTable<Key,Value>::chtbl_init(int buckets, int (*hashfunc)(const Key
 		int (*match)(const Key key1, const Key key2),
 		void (*destroy)(Key data))
 {
-	int i;
-	Key k;
 	try
 	{
 		this->table = new List<Key>[buckets];
@@ -185,7 +183,6 @@ int ChainHashTable<Key,Value>::chtbl_init(int buckets, int (*hashfunc)(const Key
 template<typename Key, typename Value>
 void ChainHashTable<Key,Value>::chtbl_destroy()
 {
-	int i;
 	//for(i = 0; i < this->buckets; ++i)
 	{
 		//list_destroy(&this->table[i]);

@@ -114,7 +114,16 @@ Order * DeserializeOrder(StringType strOrder)
 {
 	Reader reader;
 	Value jsonOrder;
+	Order * op;
 	reader.parse(strOrder.c_str(), jsonOrder);
+
+	op = DeserializeOrder(jsonOrder);
+	return op;
+
+}
+
+Order * DeserializeOrder(Value & jsonOrder)
+{
 /*	Order(IntIDType clientID,
 			InstructionType instType,
 			string & instID,
@@ -136,5 +145,4 @@ Order * DeserializeOrder(StringType strOrder)
 			(IntIDType)(jsonOrder["LocalOrderID"].asInt())
 			);
 	return ip;
-
 }
