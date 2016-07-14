@@ -8,7 +8,7 @@
 #ifndef ORDER_H_
 #define ORDER_H_
 
-#include <String>
+#include <string>
 
 #include "RightTimePoint.h"
 #include "Instruction.h"

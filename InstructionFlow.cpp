@@ -6,6 +6,8 @@
  */
 
 #include "InstructionFlow.h"
+#include "DBAccess.h"
+#include "MySQLDB.h"
 
 InstructionFlow::InstructionFlow() :
 	InstructionHandlers(NULL),
@@ -64,6 +66,38 @@ ReturnType InstructionFlow::DispatchInstruction(Instruction &inst)
 
 	case InstructionType::MARKETPRICEORDER:
 		op = (Order *)(&inst);
+		{
+		MYSQL * conn_ptr = NULL;
+				conn_ptr = NULL;
+				conn_ptr = InitializeMySQLClient(conn_ptr);
+				//assert(conn_ptr != NULL);
+				conn_ptr = ConnectMySQLServer(conn_ptr);
+				//assert(conn_ptr != NULL);
+
+				if (!mysql_set_character_set(conn_ptr, "utf8"))
+				{
+				    printf("New client character set: %s\n",
+				           mysql_character_set_name(conn_ptr));
+				}
+
+				//Order * op = GenOrder();
+
+				char * sql_insert = GetInsertOrderSQL(op);
+				op->SetVolumeLeft(op->GetVolumeLeft() + 10);
+				char * sql_update = GetUpdateOrderSQL(op);
+				//ProgramMessage::Debug(sql_insert);
+				//ProgramMessage::Debug(sql_update);
+				if(mysql_query(conn_ptr, sql_insert))
+				{
+					fprintf(stderr, "call mysql_query failed...%d: %s", errno, mysql_error(conn_ptr));
+				}
+
+				mysql_close(conn_ptr);
+
+				//delete op;
+				delete sql_insert;
+				delete sql_update;
+		}
 		obp = (*(this->InstructionHandlers))[op->GetInstrumentID()];
 		ret = obp->OrderAction(op);
 

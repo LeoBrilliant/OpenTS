@@ -122,14 +122,21 @@ hungup:
 				else
 				{
 					//request(buf, nread, clifd, client[i].uid);
-					//printf("%s\n", buf);
+					printf("%s\n", buf);
 					fflush(stdout);
-					Json::Reader jsonReader;
+					Json::Reader jsonReader(Json::Features::strictMode());
 					Json::Value jsonValue;
 					bool parseResult = jsonReader.parse(buf, jsonValue);
 					if(parseResult)
 					{
-						Json::Value inst = jsonValue["Instruction"];
+						//bool ret = jsonValue.isMember("Instruction");
+						//jsonValue["Instruction"].empty()
+						if(jsonValue.type() != Json::objectValue)
+						{
+
+						}
+						else{
+							Json::Value inst = jsonValue["Instruction"];
 						if(inst["InstType"].asInt() == InstructionType::LIMITPRICEORDER)
 						{
 							printf("LimitPriceOrderReceived\n");
@@ -137,6 +144,7 @@ hungup:
 							Instruction * op = DeserializeOrder(jsonValue);
 
 							infra.AcceptInstruction(*op);
+						}
 						}
 					}
 				}

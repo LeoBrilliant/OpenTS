@@ -8,7 +8,7 @@
 #ifndef INSTRUMENT_H_
 #define INSTRUMENT_H_
 
-#include <String>
+#include <string>
 #include "Types.h"
 #include "Constants.h"
 
